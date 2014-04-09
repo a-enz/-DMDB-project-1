@@ -32,10 +32,8 @@
 	<input type="submit" value="Search" title="Search by Attribute" />
 </div>
 </form>
-
-<%  
-	//TODO Display search results 
-	// session.getAttribute("results");
+<%=
+	 session.getAttribute("results")
 %>
 
 <hr/>

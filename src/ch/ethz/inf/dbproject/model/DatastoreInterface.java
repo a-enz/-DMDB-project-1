@@ -247,8 +247,6 @@ public final class DatastoreInterface {
 		}
 	}
 	
-	
-	
 	public final List<Person> getMostWanted() {
 		try {
 			
@@ -289,7 +287,6 @@ public final class DatastoreInterface {
 			return null;
 		}
 	}
-	
 	
 	public final List<PersonNote> getAllPersonNote() {
 		try {
@@ -359,6 +356,40 @@ public final class DatastoreInterface {
 			ex.printStackTrace();
 			return null;			
 		}
+	}
+
+	public List<Case> searchByName(String name) {
+		List<Case> res = new ArrayList<Case>();
+		try {
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title = '" + name + "'");
+			//System.out.print((rs.isFirst() == rs.isLast() ? "Empty " : "NotEmpty ") + "SELECT * FROM Cases WHERE Title = '" + name + "'\n");
+			while (rs.next()) {
+				res.add(new Case(rs));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	public List<Case> searchByCategory(String category) {
+		List<Case> res = new ArrayList<Case>();
+		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName = '" + category + "'";
+		try {
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				res.add(new Case(rs));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 	
 	
