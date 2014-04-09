@@ -17,11 +17,11 @@ public final class MySQLConnection {
 	 * The connection parameters. You should change these to point to your
 	 * installation specific values.
 	 */
-	public static final String USERNAME = "dmdb";
-	public static final String PASSWORD = "1234";
-	public static final String HOSTNAME = "localhost";
+	public static final String USERNAME = "sql336107";
+	public static final String PASSWORD = "kR7!vN3*";
+	public static final String HOSTNAME = "sql3.freesqldatabase.com";
 	public static final int PORT = 3306;
-	public static final String DATABASE = "dmdb2014";
+	public static final String DATABASE = "sql336107";
 
 	private final Connection connection;
 
