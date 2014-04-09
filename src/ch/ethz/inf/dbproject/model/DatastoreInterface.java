@@ -362,7 +362,7 @@ public final class DatastoreInterface {
 		List<Case> res = new ArrayList<Case>();
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title = '" + name + "'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title like '" + name + "'");
 			//System.out.print((rs.isFirst() == rs.isLast() ? "Empty " : "NotEmpty ") + "SELECT * FROM Cases WHERE Title = '" + name + "'\n");
 			while (rs.next()) {
 				res.add(new Case(rs));
@@ -377,7 +377,7 @@ public final class DatastoreInterface {
 
 	public List<Case> searchByCategory(String category) {
 		List<Case> res = new ArrayList<Case>();
-		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName = '" + category + "'";
+		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName like '" + category + "'";
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);
