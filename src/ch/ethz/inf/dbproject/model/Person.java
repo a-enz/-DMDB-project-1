@@ -11,16 +11,16 @@ public final class Person {
 	private final String SurName;
 	private final String Street;
 	private final Date BirthDate;
-	private final String Address;
+	private final String Nationality;
 	private final int Bounty;
 	
-	public Person(final int personid, final String firstname, final String surname, final String street, final Date birthdate, final String address, final int bounty) {
+	public Person(final int personid, final String firstname, final String surname, final String street, final Date birthdate, final String nationality, final int bounty) {
 		this.PersonID = personid;
 		this.FirstName = firstname;
 		this.SurName = surname;
 		this.BirthDate = birthdate;
 		this.Street = street;
-		this.Address = address;
+		this.Nationality = nationality;
 		this.Bounty = bounty;
 	}
 
@@ -44,8 +44,8 @@ public final class Person {
 		return BirthDate;
 	}
 
-	public String getAddress() {
-		return Address;
+	public String getNationality() {
+		return Nationality;
 	}
 
 	public int getBounty() {
