@@ -74,7 +74,7 @@ public final class PersonDetailServlet extends HttpServlet {
 			table.addBeanColumn("Surname", "SurName");
 			table.addBeanColumn("Street", "Street");
 			table.addBeanColumn("Birthdate", "BirthDate");
-			table.addBeanColumn("Address", "Address");
+			table.addBeanColumn("Nationality", "Nationality");
 			table.addBeanColumn("Bounty", "Bounty");
 			table.setVertical(true);
 			

@@ -33,11 +33,11 @@ public final class DatastoreInterface {
 		System.out.println("Enter getPersonByID");
 		try{
 			sqlStatement = sqlConnection.createStatement();
-			final ResultSet rs = sqlStatement.executeQuery("Select PersonID, FirstName, SurName, Street, BirthDate, Address, Bounty FROM Person WHERE PersonID=" + PersonID.toString());
+			final ResultSet rs = sqlStatement.executeQuery("Select PersonID, FirstName, SurName, Street, BirthDate, Nationality, Bounty FROM Person WHERE PersonID=" + PersonID.toString());
 			
 		      while(rs.next()){
 			         //Display values
-			         result = new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Address"), rs.getInt("Bounty"));
+			         result = new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Nationality"), rs.getInt("Bounty"));
 		      	}
 		      return result;
 			
@@ -158,7 +158,7 @@ public final class DatastoreInterface {
 			final ResultSet rs = stmt.executeQuery("Select * FROM Person");
 			final List<Person> people = new ArrayList<Person>(); 
 			while (rs.next()) {
-				people.add(new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Address"), rs.getInt("Bounty")));
+				people.add(new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Nationality"), rs.getInt("Bounty")));
 			}
 			
 			rs.close();
@@ -251,10 +251,10 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select PersonID, FirstName, SurName, Street, BirthDate, Address, Bounty FROM Person ORDER BY Bounty DESC");
+			final ResultSet rs = stmt.executeQuery("Select PersonID, FirstName, SurName, Street, BirthDate, Nationality, Bounty FROM Person ORDER BY Bounty DESC");
 			final List<Person> people = new ArrayList<Person>(); 
 			while (rs.next()) {
-				people.add(new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Address"), rs.getInt("Bounty")));
+				people.add(new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Nationality"), rs.getInt("Bounty")));
 			}
 			
 			rs.close();
@@ -391,6 +391,12 @@ public final class DatastoreInterface {
 		}
 		return res;
 	}
+	
+//	public void addPerson(String firstName, String surName, String street, Date birthDate, String Nationality, int Bounty)
+//	{
+//		String values = ""
+//		String sqlInsert = "INSERT INTO Person (FirstName, SurName, Street, BirthDate, Nationality, Bounty) " + values;
+//	}
 	
 	
 	

@@ -5,11 +5,13 @@
 
 <form action="AddPerson" method="get">
 	Firstname: <input type="text" name="Firstname"/><br/>
-	Surname: <input type="text" name="Lastname"/><br/>
+	Surname: <input type="text" name="Surname"/><br/>
 	Street: <input type="text" name="Street" /><br/>
 	Birthdate: <input type="date" name="Birthdate"/><br/>
 	Address: <input type="text" name="Address"/><br/>
-	<input type="submit" value="Submit" />
+	<!-- TODO: Implement editing option -->
+	Bounty: <input type="text" name="Bounty"/><br/>
+	<input type="submit" value="Add" title="AddPerson"/>
 </form>
 
 <%@ include file="Footer.jsp" %>
