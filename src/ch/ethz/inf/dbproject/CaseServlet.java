@@ -86,6 +86,13 @@ public final class CaseServlet extends HttpServlet {
 				}
 				
 			}
+			else if (action!= null && action.equals("remove_note")){
+				System.out.println("Remove CaseNote");
+				final String NoteNr = request.getParameter("notenr");
+				if (NoteNr != null){
+					dbInterface.removeCaseNote(NoteNr);
+				}
+			}
 			
 			//-----------------TODO: Add Comment------------------
 			
@@ -159,6 +166,11 @@ public final class CaseServlet extends HttpServlet {
 			);
 			
 			notetable.addBeanColumn("Text", "Text");
+			notetable.addLinkColumn("",	/* The header. We will leave it empty */
+					"Remove Note", 	/* What should be displayed in every row */
+					"Case?id="+ id +"&action=remove_note&notenr=", 	/* This is the base url. The final url will be composed from the concatenation of this and the parameter below */
+					"NoteNr"); 			/* For every case displayed, the ID will be retrieved and will be attached to the url base above */
+
 			
 			notetable.addObjects(dbInterface.getCaseNoteById(id));
 			session.setAttribute("noteTable", notetable);
