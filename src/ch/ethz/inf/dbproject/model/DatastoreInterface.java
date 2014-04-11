@@ -382,7 +382,6 @@ public final class DatastoreInterface {
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title like '" + name + "'");
-			//System.out.print((rs.isFirst() == rs.isLast() ? "Empty " : "NotEmpty ") + "SELECT * FROM Cases WHERE Title = '" + name + "'\n");
 			while (rs.next()) {
 				res.add(new Case(rs));
 			}

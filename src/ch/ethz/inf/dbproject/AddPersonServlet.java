@@ -62,6 +62,8 @@ public final class AddPersonServlet extends HttpServlet {
 		
 		//System.out.println((request.getServletContext() == null) ? "Context Null" : "Context Not null");
         this.getServletContext().getRequestDispatcher("/AddPerson.jsp").forward(request, response);	
+		session.setAttribute("valid_input", true);
+		session.setAttribute("added", false);
 	}
 	
 	public String printInputHtml(String firstName, String surName, String street, String birthDate, String nationality, String bounty){

@@ -15,6 +15,13 @@
 	<input type="submit" value="Add" title="AddPerson"/> <br/> <br/>
 </form>
 
+<%-- <%
+	if((Boolean) session.getAttribute("valid_input") == false && (Boolean) session.getAttribute("added") == false) {
+%>
+		Invalid Input <br/>
+<%
+}
+%> --%>
 <%
 	if((Boolean) session.getAttribute("added") == true) {
 %>
