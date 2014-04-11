@@ -441,10 +441,6 @@ public final class DatastoreInterface {
 		else return false;	//invalid input
 
 	}
-	
-	
-	
-	//TODO Implement all missing data access methods
 
 
 }

@@ -37,14 +37,9 @@ public final class AddPersonServlet extends HttpServlet {
 		
 		final HttpSession session = request.getSession(true);
 		
-		final BeanTableHelper<Person> table = new BeanTableHelper<Person>(
-				"person" 		/* The table html id property */,
-				"table" /* The table html class property */,
-				Person.class 	/* The class of the objects (rows) that will be displayed */
-		);
 		
 		session.setAttribute("valid_input", true);
-		session.setAttribute("added", null);
+		session.setAttribute("added", false);
 		
 		final String firstName = request.getParameter("FirstName");
 		final String surName = request.getParameter("SurName");
