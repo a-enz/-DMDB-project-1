@@ -32,8 +32,12 @@
 	<input type="submit" value="Search" title="Search by Attribute" />
 </div>
 </form>
-<%=
-	 session.getAttribute("results")
+<%
+	if((Boolean) session.getAttribute("search") == true) {
+%>
+		<%=session.getAttribute("results") %>
+<%
+}
 %>
 
 <hr/>
