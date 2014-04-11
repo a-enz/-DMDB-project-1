@@ -86,6 +86,13 @@ public final class CaseServlet extends HttpServlet {
 				}
 				
 			}
+			else if (action!= null && action.equals("remove_note")){
+				System.out.println("Remove CaseNote");
+				final String NoteNr = request.getParameter("notenr");
+				if (NoteNr != null){
+					dbInterface.removeCaseNote(NoteNr);
+				}
+			}
 			
 			//-----------------TODO: Add Comment------------------
 			
@@ -159,7 +166,11 @@ public final class CaseServlet extends HttpServlet {
 			);
 			
 			notetable.addBeanColumn("Text", "Text");
-			
+			notetable.addLinkColumn("",
+					"Remove Note",
+					"Case?id="+ id +"&action=remove_note&notenr=",
+					"NoteNr");
+			//notetable.addLinkColumn("", "Edit Note","Case?id="+ id +"&action=edit_note&notenr=" , "NoteNr");
 			notetable.addObjects(dbInterface.getCaseNoteById(id));
 			session.setAttribute("noteTable", notetable);
 			

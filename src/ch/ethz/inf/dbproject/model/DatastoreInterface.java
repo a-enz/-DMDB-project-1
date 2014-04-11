@@ -175,10 +175,10 @@ public final class DatastoreInterface {
 	public final List<CasePerson> GetCasePersonById(final int id){
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT c.PersonID, FirstName, SurName, Reason FROM Connected c,Person p WHERE CaseID=" + id +" AND c.PersonID = p.PersonID");
+			final ResultSet rs = stmt.executeQuery("SELECT c.PersonID, FirstName, SurName, Reason, Role FROM Connected c,Person p WHERE CaseID=" + id +" AND c.PersonID = p.PersonID");
 			final List <CasePerson> casepersons = new ArrayList<CasePerson>();
 			while(rs.next()){
-				casepersons.add(new CasePerson(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Reason")));
+				casepersons.add(new CasePerson(rs));
 			}
 			return casepersons;
 		}catch (final SQLException ex){
@@ -272,10 +272,10 @@ public final class DatastoreInterface {
 		try{
 			Integer ID = id;
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs= stmt.executeQuery("SELECT Text FROM CaseNote WHERE CaseID=" + ID.toString()); //TODO Get the text form sql. SELECT Text FROM CaseNote WHERE CaseNr=id;
+			final ResultSet rs= stmt.executeQuery("SELECT Text, NoteNr FROM CaseNote WHERE CaseID=" + ID.toString());
 			final List<NoteText> note = new ArrayList<NoteText>();
 			while (rs.next()){
-				note.add(new NoteText(rs.getString("Text")));
+				note.add(new NoteText(rs));
 			}
 			rs.close();
 			stmt.close();
@@ -285,6 +285,16 @@ public final class DatastoreInterface {
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 			return null;
+		}
+	}
+	
+	public final void removeCaseNote(String id){
+		try{
+			final Statement stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate("DELETE FROM CaseNote WHERE NoteNr = " + id);
+			System.out.println("DELETE FROM CaseNote WHERE NoteNr = " + id);
+		}catch (final SQLException ex){
+			ex.printStackTrace();
 		}
 	}
 	
@@ -313,10 +323,10 @@ public final class DatastoreInterface {
 		try {
 			Integer iid = id;
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT Text FROM PersonNote WHERE PersonID = " + iid.toString());
+			final ResultSet rs = stmt.executeQuery("SELECT Text,NoteNr FROM PersonNote WHERE PersonID = " + iid.toString());
 			final List<NoteText> note = new ArrayList<NoteText>(); 
 			while (rs.next()) {
-				note.add(new NoteText(rs.getString("Text")));
+				note.add(new NoteText(rs));
 			}
 			
 			rs.close();
@@ -334,6 +344,15 @@ public final class DatastoreInterface {
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate("INSERT INTO PersonNote (PersonID, Username, Text) values ( " + PersonID + ", '" + username + "', '" + Text + "' )");
+		}catch (final SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public final void removePersonNote(String NoteNr){
+		try{
+			final Statement stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate("DELETE FROM PersonNote WHERE NoteNr = " + NoteNr);
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
