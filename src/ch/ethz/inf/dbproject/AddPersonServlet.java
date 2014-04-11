@@ -3,7 +3,7 @@ package ch.ethz.inf.dbproject;
 import java.io.IOException;
 
 import java.util.List;
-
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +43,45 @@ public final class AddPersonServlet extends HttpServlet {
 				Person.class 	/* The class of the objects (rows) that will be displayed */
 		);
 		
+		session.setAttribute("valid_input", true);
+		session.setAttribute("added", null);
+		
+		final String firstName = request.getParameter("FirstName");
+		final String surName = request.getParameter("SurName");
+		final String street = request.getParameter("Street");
+		final String birthDate = request.getParameter("BirthDate");
+		final String nationality = request.getParameter("Nationality");
+		final String bounty = request.getParameter("Bounty");
+		
+		if(dbInterface.addPerson(firstName, surName, street, birthDate, nationality, bounty)) {
+			session.setAttribute("valid_input", true);
+			session.setAttribute("added", true);
+			session.setAttribute("personinfo", printInputHtml(firstName, surName, street, birthDate, nationality, bounty));
+		}
+		else {
+			session.setAttribute("valid_input", false);
+		}
+		
+		showInput(firstName, surName, street, birthDate, nationality, bounty);
+		
+		
 		//System.out.println((request.getServletContext() == null) ? "Context Null" : "Context Not null");
         this.getServletContext().getRequestDispatcher("/AddPerson.jsp").forward(request, response);	
+	}
+	
+	public String printInputHtml(String firstName, String surName, String street, String birthDate, String nationality, String bounty){
+		return "Firstname: " + firstName + "<br/>" + "Surname: " + surName + "<br/>" + "Street: " + street + "<br/>" + "Birthdate: " + birthDate + "<br/>" + "Nationality: " +nationality + "<br/>" + "Bounty: " + bounty +"<br/>";
+	}
+	
+	public void showInput(String firstName, String surName, String street, String birthDate, String nationality, String bounty){
+		System.out.println("----------------------------");
+		System.out.println("FirstName:\t" + firstName);
+		System.out.println("SurName:\t" + surName);
+		System.out.println("Street:\t\t" + street);
+		System.out.println("BirthDate:\t" + birthDate);
+		System.out.println("Nationality:\t" + nationality);
+		System.out.println("Bounty:\t\t" + bounty);
+		System.out.println("----------------------------");
 	}
 	
 	

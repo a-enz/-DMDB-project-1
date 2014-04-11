@@ -35,7 +35,7 @@
 <%
 	if((Boolean) session.getAttribute("search") == true) {
 %>
-		<%=session.getAttribute("results") %>
+		<%=session.getAttribute("results") %> 
 <%
 }
 %>

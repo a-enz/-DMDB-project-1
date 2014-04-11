@@ -392,11 +392,36 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-//	public void addPerson(String firstName, String surName, String street, Date birthDate, String Nationality, int Bounty)
-//	{
-//		String values = ""
-//		String sqlInsert = "INSERT INTO Person (FirstName, SurName, Street, BirthDate, Nationality, Bounty) " + values;
-//	}
+	public boolean addPerson(String firstName, String surName, String street, String birthDate, String nationality, String bounty)
+	{
+		String fields = "(FirstName, SurName";
+		String values = "values('" + firstName + "', '" + surName + "'";
+		String insert;
+		
+		Statement stmt;
+
+		if(firstName != null && firstName != "" && surName != null && surName != null) {	//valid input as firstname and surname are mandatory and bounty shouldnt be sth silly
+			if(street != null) {fields = fields + ", Street"; values = values + ", " + (street == "" ? "NULL" : "'" + street + "'");}
+			if(birthDate != null) {fields = fields + ", BirthDate"; values = values + ", " + (birthDate == "" ? "NULL" : "'" + birthDate + "'");}
+			if(nationality != null) {fields = fields + ", Nationality"; values = values + ", " + (nationality == "" ? "NULL" : "'" + nationality + "'");}
+			if(bounty != null) {fields = fields + ", Bounty"; values = values + ", " + (bounty == "" ? "NULL" : "'" + bounty + "'" );}
+			fields = fields + ") ";
+			values = values + ") ";
+			insert = "INSERT INTO Person " + fields + values;
+
+			try {
+				stmt = this.sqlConnection.createStatement();
+				stmt.executeUpdate(insert);
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+			
+		}
+		else return false;	//invalid input
+
+	}
 	
 	
 	
