@@ -323,7 +323,7 @@ public final class DatastoreInterface {
 		try {
 			Integer iid = id;
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT Text FROM PersonNote WHERE PersonID = " + iid.toString());
+			final ResultSet rs = stmt.executeQuery("SELECT Text,NoteNr FROM PersonNote WHERE PersonID = " + iid.toString());
 			final List<NoteText> note = new ArrayList<NoteText>(); 
 			while (rs.next()) {
 				note.add(new NoteText(rs));
@@ -344,6 +344,15 @@ public final class DatastoreInterface {
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate("INSERT INTO PersonNote (PersonID, Username, Text) values ( " + PersonID + ", '" + username + "', '" + Text + "' )");
+		}catch (final SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public final void removePersonNote(String NoteNr){
+		try{
+			final Statement stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate("DELETE FROM PersonNote WHERE NoteNr = " + NoteNr);
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}

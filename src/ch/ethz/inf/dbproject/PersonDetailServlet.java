@@ -91,8 +91,13 @@ public final class PersonDetailServlet extends HttpServlet {
 			
 			
 			if (action != null && action.equals("add_comment")){
-				System.out.println("Insert an comment");
+				System.out.println("Insert a comment");
 				dbInterface.insertPersonNote(id, username, text);
+			}
+			else if (action !=null && action.equals("remove_note")){
+				System.out.println("remove a comment");
+				String NoteNr = request.getParameter("notenr");
+				dbInterface.removePersonNote(NoteNr);
 			}
 			
 			
@@ -105,8 +110,13 @@ public final class PersonDetailServlet extends HttpServlet {
 			);
 			
 			notetable.addBeanColumn("Note", "Text");
+			notetable.addLinkColumn("",
+					"Remove Note",
+					"PersonDetail?id="+ id +"&action=remove_note&notenr=",
+					"NoteNr");
 			
 			notetable.addObjects(this.dbInterface.getPersonNoteById(id));
+
 			
 			session.setAttribute("personnoteTable", notetable);
 			
