@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 
+
 public final class Case {
 	
 	/**
@@ -11,11 +12,11 @@ public final class Case {
 	 */
 	private final int CaseNr;
 	private final String Title;
-	private final Date Date;
+	private Date Date;
 	private final String Location;
 	private final String Status;
-	private final Date DateCon;
-	private final Date DateEnd;
+	private Date DateCon;
+	private Date DateEnd;
 	
 	/**
 	 * Construct a new case.
@@ -30,6 +31,19 @@ public final class Case {
 		this.Status = status;
 		this.DateCon = datecon;
 		this.DateEnd = dateend;
+	}
+	
+	public Case(final int casenr, final String title, final String date, final String location, final String status, final String datecon, final String dateend) {
+		this.CaseNr = casenr;
+		this.Title = title;
+		try {this.Date = java.sql.Date.valueOf(date);}
+		catch (Exception e) {this.Date = null;}
+		this.Location = location;
+		this.Status = status;
+		try {this.DateCon = java.sql.Date.valueOf(datecon);}
+		catch (Exception e) {this.DateCon = null;}
+		try {this.DateEnd = java.sql.Date.valueOf(dateend);}
+		catch (Exception e) {this.DateEnd = null;}
 	}
 	
 	public Case(final ResultSet rs) throws SQLException {
