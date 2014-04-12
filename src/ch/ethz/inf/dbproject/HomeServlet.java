@@ -33,13 +33,8 @@ public final class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final HttpSession session = request.getSession(true);
-		
-	    MessageHelper mh = new MessageHelper();
-	    mh.ErrorMessage("blabla");
-	    mh.SuccessMessage("success. Everything is right! =)");
+
 	    
-	    session.setAttribute("error", mh.toString());
-		
         this.getServletContext().getRequestDispatcher("/Home.jsp").forward(request, response);	  
 	}
 }

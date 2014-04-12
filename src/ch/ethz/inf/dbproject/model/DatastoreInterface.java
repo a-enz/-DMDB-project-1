@@ -101,11 +101,24 @@ public final class DatastoreInterface {
 		}
 	}
 	
-	public final void addPersonToCase(final int id, final String personid){
+	public final void addPersonToCase(final int id, final String personid, final String reason){
 		try{
 			final Statement sqlStatement = sqlConnection.createStatement();
+<<<<<<< HEAD
 			sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role) VALUES (" + id + "," + personid + ", 'perpetrates')");
 			sqlStatement.close();
+=======
+			ResultSet rs = sqlStatement.executeQuery("SELECT * FROM Connected WHERE CaseID = "+ id +" AND PersonID = " + personid);
+			if(rs.next()){
+				sqlStatement.executeUpdate("UPDATE Connected SET Reason = '" + reason + "' WHERE CaseID = " + id + " AND PersonID = " + personid);
+			}else{
+				sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role, Reason) VALUES (" + id + "," + personid + ", 'suspects', '" + reason + "')");
+			}
+			
+			sqlStatement.close();
+			rs.close();
+			
+>>>>>>> 1150e4bfc6d1d52754ba130d1094cf3608803367
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -416,6 +429,42 @@ public final class DatastoreInterface {
 		} catch (final SQLException ex) {			
 			ex.printStackTrace();
 			return null;			
+		}
+	}
+	
+	public final void insertUser(String username, String password, String realname) {
+		try{
+			final Statement sqlStatement = sqlConnection.createStatement();
+			
+			sqlStatement.executeUpdate("INSERT INTO User (Username, Passwort, Name) values ( '" + username + "', '" + password + "', '" + realname + "' )");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final boolean isRegistered(String username){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT * " +
+													"FROM User " +
+													"WHERE Username = '" + username + "'");
+			
+			if(rs.next()){
+				rs.close();
+				stmt.close();
+				return true;
+			}
+			else{
+				rs.close();
+				stmt.close();
+				return false;
+			}
+
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			return true;
 		}
 	}
 
