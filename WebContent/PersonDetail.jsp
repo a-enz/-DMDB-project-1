@@ -7,10 +7,18 @@
 <h1>Person Details</h1>
 
 <%=session.getAttribute("persondetailTable")%>
-
-<%=session.getAttribute("personnoteTable")%>
-<%	//TODO close or reopen the case
+<%
+if (user != null) {
+	// User is logged in. He can edit the person
 %>
+	<form action="PersonEdit" method="get">
+		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
+		<input type="submit" value="Edit"/>
+	</form>
+<%
+}
+%>
+<%=session.getAttribute("personnoteTable")%>
 
 
 <%
@@ -31,7 +39,7 @@ if (user != null) {
 	<form action="Person" method="get">
 		<input type="hidden" name="action" value="delete" />
 		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
-		<input type="submit" value="Delete Person" title="title"/>
+		<input type="submit" value="Delete Person"/>
 	</form>
 <%
 }
