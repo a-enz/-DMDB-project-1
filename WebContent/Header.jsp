@@ -40,6 +40,7 @@
 					<li><a href="Cases?filter=closed">Closed</a></li>
 					<li><a href="Cases?filter=recent">Most Recent</a></li>
 					<li><a href="Cases?filter=oldest">Oldest Unsolved</a></li>
+					<li><a href="AddCase">Add a new Case</a></li>
 				</ul>
 				</li>
 				

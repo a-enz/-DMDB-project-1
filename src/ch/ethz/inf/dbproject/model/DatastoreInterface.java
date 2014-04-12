@@ -34,7 +34,9 @@ public final class DatastoreInterface {
 		      while(rs.next()){
 			         //Display values
 			         result = new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Nationality"), rs.getInt("Bounty"));
-		      	}
+		      }
+		      sqlStatement.close();
+		      rs.close();
 		      return result;
 			
 		}catch (final SQLException ex) {			
@@ -48,7 +50,7 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("INSERT INTO CaseNote (CaseID, Username, Text) values ( " + CaseID + ", '" + username + "', '" + text + "' )");
-
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -60,7 +62,7 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Title='" + title + "' WHERE CaseNr=" + id);
-
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -71,7 +73,7 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Location='" + location + "' WHERE CaseNr=" + id);
-
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -82,7 +84,7 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Date='" + date + "' WHERE CaseNr=" + id);
-
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -93,7 +95,7 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
-
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -103,6 +105,7 @@ public final class DatastoreInterface {
 		try{
 			final Statement sqlStatement = sqlConnection.createStatement();
 			sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role) VALUES (" + id + "," + personid + ", 'perpetrates')");
+			sqlStatement.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -123,6 +126,8 @@ public final class DatastoreInterface {
 			         //Display values
 		    	  result = new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd"));
 			  }
+		      rs.close();
+		      sqlStatement.close();
 		      return result;
 			
 		}catch (final SQLException ex) {			
@@ -182,6 +187,8 @@ public final class DatastoreInterface {
 			while(rs.next()){
 				casepersons.add(new CasePerson(rs));
 			}
+			stmt.close();
+			rs.close();
 			return casepersons;
 		}catch (final SQLException ex){
 			ex.printStackTrace();
@@ -197,6 +204,8 @@ public final class DatastoreInterface {
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
 			}
+			stmt.close();
+			rs.close();
 			return cases;
 		} catch (final SQLException ex){
 			ex.printStackTrace();
@@ -212,6 +221,8 @@ public final class DatastoreInterface {
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
 			}
+			stmt.close();
+			rs.close();
 			return cases;
 		} catch (final SQLException ex){
 			ex.printStackTrace();
@@ -226,7 +237,10 @@ public final class DatastoreInterface {
 			final List <Case> cases = new ArrayList<Case>();
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
-			}
+			}			
+			stmt.close();
+			rs.close();
+
 			return cases;
 		} catch (final SQLException ex){
 			ex.printStackTrace();
@@ -242,6 +256,8 @@ public final class DatastoreInterface {
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
 			}
+			stmt.close();
+			rs.close();
 			return cases;
 		} catch (final SQLException ex){
 			ex.printStackTrace();
@@ -355,6 +371,7 @@ public final class DatastoreInterface {
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate("DELETE FROM PersonNote WHERE NoteNr = " + NoteNr);
+			stmt.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
@@ -481,6 +498,7 @@ public final class DatastoreInterface {
 			try {
 				stmt = this.sqlConnection.createStatement();
 				stmt.executeUpdate(insert);
+				stmt.close();
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -498,6 +516,7 @@ public final class DatastoreInterface {
 		try {
 			stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate(delete);
+			stmt.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -522,12 +541,40 @@ public final class DatastoreInterface {
 			//System.out.println(update + where);
 			stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate(update + where);
+			stmt.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean insertCase(String title, String date, String location, String dateCon, String dateEnd) {
+		String insert = "INSERT INTO Cases (Title, Date";
+		String values = " values(";
 		
+		Statement stmt;
+
+		if(title == null || title.equals("") || date == null || date.equals("")) {System.out.println("fuckedup");return false;}		//invalid input
+		else values = values + "'" + title + "', '" + date + "'";
+		
+		if(location != null && !location.equals("")) {insert = insert + ", Location"; values = values + ", '" + location + "'";}
+		if(dateCon != null && !dateCon.equals("")) {insert = insert + ", DateCon"; values = values + ", '" + dateCon  + "'";}
+		if(dateEnd != null && !dateEnd.equals("")) {insert = insert + ", DateEnd"; values = values + ", '" + dateEnd  + "'";}
+		
+		values = values + ")";
+		insert = insert + ")";
+		
+		try {
+			//System.out.println(insert + values);
+			stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate(insert + values);
+			stmt.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 
