@@ -87,7 +87,7 @@ public final class CasesServlet extends HttpServlet {
 		} else if (category != null) {
 
 			// TODO implement this!
-			//table.addObjects(this.dbInterface.getProjectsByCategory(category));
+			//table.addObjects(this.dbInterface.getCasesByCategory(category));
 			
 		} else if (filter != null) {
 		
@@ -97,19 +97,16 @@ public final class CasesServlet extends HttpServlet {
 
 			} else if (filter.equals("closed")) {
 
-				// TODO implement this!
 				table.addObjects(this.dbInterface.getClosedCases());
 
 			} else if (filter.equals("recent")) {
 
-				// TODO implement this!
 				table.addObjects(this.dbInterface.getMostRecentCases());
 
 			}
 			
 			else if (filter.equals("oldest")) {
 
-				// TODO implement this!
 				table.addObjects(this.dbInterface.getOldestUnsolvedCases());
 			}
 			

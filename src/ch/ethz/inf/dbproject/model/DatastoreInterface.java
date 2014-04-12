@@ -88,16 +88,34 @@ public final class DatastoreInterface {
 		}
 	}
 	
-	public final void updateCaseStatus(final int id, final String status){
+	public final void updatePersonNote(final String NoteNr, final String NoteText){
 		try{
-			final Statement sqlStatement = sqlConnection.createStatement();
-
-			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
+			final Statement stmt = sqlConnection.createStatement();
+			stmt.executeUpdate("UPDATE PersonNote SET Text='" + NoteText + "' WHERE NoteNr=" + NoteNr);
+			stmt.close();
 
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
 	}
+	
+	public final void updateCaseStatus(final int id, final String status){
+		try{
+			final Statement sqlStatement = sqlConnection.createStatement();
+
+			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
+			if (status.equals("close")){
+				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'perpetrator' WHERE CaseID = " + id + " AND Role = 'suspect'");
+			}
+			else if (status.equals("open")){
+				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'suspect' WHERE CaseID = " + id + " AND Role = 'perpetrator'");
+			}
+		}catch (final SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
 	
 	public final void addPersonToCase(final int id, final String personid, final String reason){
 		try{
@@ -160,6 +178,28 @@ public final class DatastoreInterface {
 			return null;			
 		}
 	}
+
+	public final List<Case> getCasesByCategory(final String Category) {
+		try {
+			
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("Select * FROM Cases, ContainIn "); //TODO: Implement this
+			final List<Case> cases = new ArrayList<Case>(); 
+			while (rs.next()) {
+				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
+			}
+			
+			rs.close();
+			stmt.close();
+
+			return cases;
+			
+		} catch (final SQLException ex) {			
+			ex.printStackTrace();
+			return null;			
+		}
+	}
+	
 	
 	
 	public final List<Person> getAllPerson() {

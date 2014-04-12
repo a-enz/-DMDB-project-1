@@ -23,9 +23,7 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 	</form>
 
 <%
-//TODO: Display cases opened by the user
 
-//TODO: Add possibility to create new case (requires a form) 
 	
 } else {
 	// User not logged in. Display the login and register form.

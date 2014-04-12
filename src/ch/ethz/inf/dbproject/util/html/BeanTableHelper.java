@@ -119,7 +119,7 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 		}
 		
 		public final String getString(final T t){
-			return "<input type=\"text\" name=\"" + name +"\" value=\"" + super.getString(t) +"\">";
+			return "<input style=\"width:100%;text-align: center;\" type=\"text\" name=\"" + name +"\" value=\"" + super.getString(t) +"\">";
 		}
 	}
 	
@@ -164,7 +164,21 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 			return "<input type=\"text\" name=\"" + name + super.getString(t) +"\">";
 		}
 	}
-	
+
+	private final class HiddenColumn extends BeanColumn{
+		
+		private final String name;
+		
+		public HiddenColumn(final String header, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
+			this.name = name;
+		}
+		
+		public final String getString(final T t){
+			String superstring = super.getString(t);
+			return "<input type=\"hidden\" name=\"" + name +"\" value = \"" + superstring +"\">" + superstring;
+		}
+	}
 
 	private final String tableHtmlId;
 	private final String tableHtmlClass;
@@ -218,6 +232,10 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 	
 	public final void addEmptyTextColumn(final String header, final String name, final String columninformation){
 		this.columns.add(new EmptyTextColumn(header, name, columninformation, this.clazz));
+	}
+	
+	public final void addHiddenColumn(final String header, final String name, final String columninformation){
+		this.columns.add(new HiddenColumn(header, name, columninformation, this.clazz));
 	}
 
 	public final void addObjects(final List<T> contentBeans) {

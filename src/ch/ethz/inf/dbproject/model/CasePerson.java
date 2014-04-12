@@ -12,6 +12,7 @@ public final class CasePerson {
 	private final String Reason;
 	private final String Role;
 	
+
 	public CasePerson(ResultSet rs) throws SQLException{
 		this.PersonID = rs.getInt("PersonID");
 		this.FirstName = rs.getString("FirstName");

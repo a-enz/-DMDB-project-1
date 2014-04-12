@@ -32,8 +32,39 @@ if (user != null) {
 }
 %>
 <h1>Notes</h1>
+
+<%
+if (request.getParameter("action") != null && request.getParameter("action").equals("edit_note")){ 
+%>
+	<form action="PersonDetail" method="get">
+<%
+}
+%>
+
 <%=session.getAttribute("personnoteTable")%>
 
+<%
+if (request.getParameter("action") != null && request.getParameter("action").equals("edit_note")){ 
+%>
+		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
+		<input type="hidden" name="action" value="save_note"/>
+		<input type="submit" value="Save">
+	</form>
+<%
+}
+%>
+
+<%
+if (request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note"))){ 
+%>
+	<form action="PersonDetail" method="get">
+		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
+		<input type="hidden" name="action" value="edit_note"/>
+		<input type="submit" value="Edit Note">
+	</form>
+<%
+}
+%>
 
 <%
 if (user != null) {

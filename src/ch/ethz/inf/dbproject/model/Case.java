@@ -5,10 +5,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 
 public final class Case {
-	
-	/**
-	 * TODO The properties of the case should be added here
-	 */
+
 	private final int CaseNr;
 	private final String Title;
 	private final Date Date;

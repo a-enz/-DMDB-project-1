@@ -56,7 +56,6 @@ public final class UserServlet extends HttpServlet {
 			// However for this project, security is not a requirement.
 			final String password = request.getParameter("password");
 
-			// TODO
 			// Ask the data store interface if it knows this user
 			User user = dbInterface.getUser(username, password);
 			

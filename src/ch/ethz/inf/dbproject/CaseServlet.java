@@ -164,12 +164,13 @@ public final class CaseServlet extends HttpServlet {
 			persontable.addBeanColumn("Firstname", "FirstName");
 			persontable.addBeanColumn("Surname","SurName");
 			persontable.addBeanColumn("Reason", "Reason");
+			persontable.addBeanColumn("Role", "Role");
 			
 
 			persontable.addObjects(dbInterface.GetCasePersonById(id));
 			session.setAttribute("personTable", persontable);
 			
-			//------------------- TODO Create Note Table-----------------
+			//------------------- Create Note Table-----------------
 			
 			final BeanTableHelper<NoteText> notetable = new BeanTableHelper<NoteText>(
 					"table" 		/* The table html id property */,

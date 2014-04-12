@@ -5,18 +5,20 @@ package ch.ethz.inf.dbproject.model;
  */
 public final class Category {
 
-	/**
-	 * TODO All properties need to be added here 
-	 */	
 	private final String name;
+	private final String parent;
 
-	public Category(final String name) {
-		super();
+	public Category(final String name, final String parent) {
 		this.name = name;
+		this.parent = parent;
 	}
 
 	public final String getName() {
 		return name;
+	}
+
+	public String getParent() {
+		return parent;
 	}
 	
 }

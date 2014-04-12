@@ -112,6 +112,14 @@ public final class PersonDetailServlet extends HttpServlet {
 				String NoteNr = request.getParameter("notenr");
 				dbInterface.removePersonNote(NoteNr);
 			}
+			else if (action !=null && action.equals("save_note")){
+				System.out.println("save note");
+				String[] NoteNrs = request.getParameterValues("notenr");
+				String[] Texts = request.getParameterValues("note");
+				for (int i = 0; i<NoteNrs.length; i++){
+					dbInterface.updatePersonNote(NoteNrs[i], Texts[i]);
+				}
+			}
 			
 			
 			//------------------ Show Notes------------------------------
@@ -122,11 +130,19 @@ public final class PersonDetailServlet extends HttpServlet {
 				NoteText.class
 			);
 			
-			notetable.addBeanColumn("Note", "Text");
-			notetable.addLinkColumn("",
-					"Remove Note",
-					"PersonDetail?id="+ id +"&action=remove_note&notenr=",
-					"NoteNr");
+			
+			if (action != null && action.equals("edit_note")){
+				notetable.addTextColumn("", "note", "Text");
+				notetable.addHiddenColumn("","notenr","NoteNr");
+			}
+			else
+			{
+				notetable.addBeanColumn("Note", "Text");
+				notetable.addLinkColumn("",
+						"Remove Note",
+						"PersonDetail?id="+ id +"&action=remove_note&notenr=",
+						"NoteNr");
+			}
 			
 			notetable.addObjects(this.dbInterface.getPersonNoteById(id));
 
