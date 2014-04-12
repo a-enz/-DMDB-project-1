@@ -45,6 +45,8 @@ public final class PersonDetailServlet extends HttpServlet {
 		final HttpSession session = request.getSession(true);
 
 		final String idString = request.getParameter("id");
+		
+		session.setAttribute("edited", false);
 
 		
 		if (idString == null) {
@@ -56,8 +58,25 @@ public final class PersonDetailServlet extends HttpServlet {
 			final Integer id = Integer.parseInt(idString);
 			session.setAttribute("id", id.toString());
 			
+			final String action = request.getParameter("action");	//can be null, edit, add_comment
+			
+			//________SHOW_EDITED_MESSAGE____________
+			if(action != null) {    //entries have been edited
+				if(action.equals("edit")){
+					boolean succ = dbInterface.updatePerson(
+							request.getParameter("id"), 
+							request.getParameter("firstname"), 
+							request.getParameter("surname"), 
+							request.getParameter("street"), 
+							request.getParameter("birthdate"), 
+							request.getParameter("nationality"), 
+							request.getParameter("bounty"));
+					//System.out.print("Succesfully edited: " + succ);
+				}
+				session.setAttribute("edited", true);
+			}
 			/*******************************************************
-			 * Construct a table to present all properties of a case
+			 * Construct a table to present all properties of a person
 			 *******************************************************/
 			final BeanTableHelper<Person> table = new BeanTableHelper<Person>(
 					"person" 		/* The table html id property */,
@@ -79,7 +98,6 @@ public final class PersonDetailServlet extends HttpServlet {
 			session.setAttribute("persondetailTable", table);
 			
 			//------------------ Add Notes ---------------------------
-			final String action = request.getParameter("action"); //add_comment
 			final String username = request.getParameter("user_name"); 
 			final String text = request.getParameter("comment");
 			

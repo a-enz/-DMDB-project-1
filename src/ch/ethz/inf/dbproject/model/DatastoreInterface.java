@@ -470,10 +470,10 @@ public final class DatastoreInterface {
 		Statement stmt;
 
 		if(firstName != null && firstName != "" && surName != null && surName != null) {	//valid input as firstname and surname are mandatory and bounty shouldnt be sth silly
-			if(street != null) {fields = fields + ", Street"; values = values + ", " + (street == "" ? "NULL" : "'" + street + "'");}
-			if(birthDate != null) {fields = fields + ", BirthDate"; values = values + ", " + (birthDate == "" ? "NULL" : "'" + birthDate + "'");}
-			if(nationality != null) {fields = fields + ", Nationality"; values = values + ", " + (nationality == "" ? "NULL" : "'" + nationality + "'");}
-			if(bounty != null) {fields = fields + ", Bounty"; values = values + ", " + (bounty == "" ? "NULL" : "'" + bounty + "'" );}
+			if(street != null) {fields = fields + ", Street"; values = values + ", " + (street.equals("") ? "NULL" : "'" + street + "'");}
+			if(birthDate != null) {fields = fields + ", BirthDate"; values = values + ", " + (birthDate.equals("") ? "NULL" : "'" + birthDate + "'");}
+			if(nationality != null) {fields = fields + ", Nationality"; values = values + ", " + (nationality.equals("") ? "NULL" : "'" + nationality + "'");}
+			if(bounty != null) {fields = fields + ", Bounty"; values = values + ", " + (bounty.equals("") ? "NULL" : "'" + bounty + "'" );}
 			fields = fields + ") ";
 			values = values + ") ";
 			insert = "INSERT INTO Person " + fields + values;
@@ -506,19 +506,20 @@ public final class DatastoreInterface {
 	}
 	
 	public boolean updatePerson(String id, String firstName, String surName, String street, String birthDate, String nationality, String bounty) {
-		String update = "UPDATE Person SET PersonID = '" + id;
-		String where = "WHERE PersonID = " + id;
+		String update = "UPDATE Person SET PersonID = '" + id + "'";
+		String where = " WHERE PersonID = " + id;
 		
 		Statement stmt;
 		
-		if(firstName != null && firstName != "") update = update + ", FirstName = '" + firstName + "'";
-		if(surName != null && surName != "") update = update + ", SurName = '" + surName + "'";
-		if(street != null && surName != "") update = update + ", Street = '" + street + "'";
-		if(birthDate != null && birthDate != "") update = update + ", BirthDate = '" + birthDate + "'";
-		if(nationality != null && nationality != "") update = update + ", Nationality = '" + nationality + "'";
-		if(bounty != null && bounty != "") update = update + ", Bounty = '" + bounty + "'";
+		if(firstName != null && !firstName.equals("")) update = update + ", FirstName = '" + firstName + "'";
+		if(surName != null && !surName.equals("")) update = update + ", SurName = '" + surName + "'";
+		if(street != null && !street.equals("")) update = update + ", Street = '" + street + "'";
+		if(birthDate != null && !birthDate.equals("")) update = update + ", BirthDate = '" + birthDate + "'";
+		if(nationality != null && !nationality.equals("")) update = update + ", Nationality = '" + nationality + "'";
+		if(bounty != null && !bounty.equals("")) update = update + ", Bounty = '" + bounty + "'";
 		
 		try {
+			//System.out.println(update + where);
 			stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate(update + where);
 			return true;

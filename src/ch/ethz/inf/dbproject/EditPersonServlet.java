@@ -26,6 +26,7 @@ public final class EditPersonServlet extends HttpServlet{
     }
 	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException{
 		
+		int id = 0;
 		final HttpSession session = request.getSession(true);
 		
 		final BeanTableHelper<Person> table = new BeanTableHelper<Person>(
@@ -33,16 +34,24 @@ public final class EditPersonServlet extends HttpServlet{
 				"table" /* The table html class property */,
 				Person.class 	/* The class of the objects (rows) that will be displayed */
 		);
-
+		try {
+			id = Integer.parseInt(request.getParameter("id"));
+			
+		} catch (Exception e) {
+			this.getServletContext().getRequestDispatcher("/Person.jsp").forward(request, response);
+		}
+		
+		final Person person = dbInterface.getPersonById(id);
 		table.addBeanColumn("PersonID", "PersonID");
-		table.addBeanColumn("First Name", "FirstName");
-		table.addBeanColumn("Surname", "SurName");
-		table.addBeanColumn("Street", "Street");
-		table.addBeanColumn("Birthdate", "BirthDate");
-		table.addBeanColumn("Nationality", "Nationality");
-		table.addBeanColumn("Bounty", "Bounty");
+		table.addTextColumn("First Name", "firstname", "FirstName");
+		table.addTextColumn("Surname", "surname","SurName");
+		table.addTextColumn("Street", "street", "Street");
+		table.addDateColumn("Birthdate", "birthdate","BirthDate");
+		table.addTextColumn("Nationality", "nationality","Nationality");
+		table.addNumberColumn("Bounty", "bounty", "Bounty");
+		table.addObject(person);
 		
-		
+		session.setAttribute("editTable", table);
 		
 //		try {
 //			final int id = request.getParameter("id");
@@ -52,6 +61,7 @@ public final class EditPersonServlet extends HttpServlet{
 		//table.addObject(this.dbInterface.getPersonById(id));
 
 		//session.setAttribute("persondetailTable", table);
+		
 		
 		this.getServletContext().getRequestDispatcher("/PersonEdit.jsp").forward(request, response);
 	}
