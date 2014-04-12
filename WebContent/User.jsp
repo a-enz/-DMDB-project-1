@@ -68,7 +68,7 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 			<td><input type="password" name="newpassword" value="" /></td>
 		</tr>
 		<tr>
-			<th>repeat the Password</th>
+			<th>confirm the Password</th>
 			<td><input type="password" name="passwordconfirm" value="" /></td>
 		</tr>
 		<tr>
@@ -78,8 +78,11 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 		</tr>
 	</table>
 	</form>
+	<%=session.getAttribute("error")%>
 <%
 }
 %>
+
+<%session.setAttribute("error","");%>
 
 <%@ include file="Footer.jsp" %>
