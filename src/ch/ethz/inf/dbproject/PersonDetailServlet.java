@@ -1,6 +1,7 @@
 package ch.ethz.inf.dbproject;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ch.ethz.inf.dbproject.model.Case;
 import ch.ethz.inf.dbproject.model.Conviction;
 import ch.ethz.inf.dbproject.model.Comment;
 import ch.ethz.inf.dbproject.model.PersonNote;
@@ -113,6 +115,32 @@ public final class PersonDetailServlet extends HttpServlet {
 			
 			session.setAttribute("personnoteTable", notetable);
 			
+			
+			
+			//______SHOW INVOLVED CASES____________
+			
+			final BeanTableHelper <Case> casetable = new BeanTableHelper<Case>(
+				"table",
+				"table",
+				Case.class
+			);
+			
+			casetable.addBeanColumn("CaseNr", "CaseNr");
+			casetable.addBeanColumn("Title", "Title");
+			casetable.addBeanColumn("Date", "Date");
+			casetable.addBeanColumn("Location", "Location");
+			casetable.addBeanColumn("Status", "Status");
+			casetable.addBeanColumn("Conviction Date", "DateCon");
+			casetable.addBeanColumn("DateEnd", "DateEnd");
+			
+			casetable.addLinkColumn("",
+					"View Details", 
+					"Case?id=", 
+					"CaseNr");
+		
+			casetable.addObjects(this.dbInterface.getInvolvedCases(id));
+			
+			session.setAttribute("involvedCasesTable", casetable);
 			
 			
 		} catch (final Exception ex) {

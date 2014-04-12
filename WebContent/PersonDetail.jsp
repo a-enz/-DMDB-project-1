@@ -7,6 +7,11 @@
 <h1>Person Details</h1>
 
 <%=session.getAttribute("persondetailTable")%>
+
+<h1>Involved Cases</h1>
+
+<%=session.getAttribute("involvedCasesTable") %>
+
 <%
 if (user != null) {
 	// User is logged in. He can edit the person
@@ -18,6 +23,7 @@ if (user != null) {
 <%
 }
 %>
+<h1>Notes</h1>
 <%=session.getAttribute("personnoteTable")%>
 
 
