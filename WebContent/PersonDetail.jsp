@@ -8,6 +8,8 @@
 
 <%=session.getAttribute("persondetailTable")%>
 
+<%=session.getAttribute("involvedCasesTable")%>
+
 <%=session.getAttribute("personnoteTable")%>
 <%	//TODO close or reopen the case
 %>
