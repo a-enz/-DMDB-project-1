@@ -27,6 +27,12 @@ if (user != null) {
 		<br />
 		<input type="submit" value="Submit" />
 	</form>
+	
+	<form action="Person" method="get">
+		<input type="hidden" name="action" value="delete" />
+		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
+		<input type="submit" value="Delete Person" title="title"/>
+	</form>
 <%
 }
 %>

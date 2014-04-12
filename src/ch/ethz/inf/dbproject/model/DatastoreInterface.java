@@ -27,10 +27,6 @@ public final class DatastoreInterface {
 		final Integer PersonID=id;
 		Person result = null;
 	
-		/**
-		 * TODO this method should return the case with the given id
-		 */
-		System.out.println("Enter getPersonByID");
 		try{
 			sqlStatement = sqlConnection.createStatement();
 			final ResultSet rs = sqlStatement.executeQuery("Select PersonID, FirstName, SurName, Street, BirthDate, Nationality, Bounty FROM Person WHERE PersonID=" + PersonID.toString());
@@ -439,6 +435,19 @@ public final class DatastoreInterface {
 		}
 		else return false;	//invalid input
 
+	}
+
+	public boolean deletePerson(String id) {
+		String delete = "DELETE FROM Person WHERE PersonID = " + id;
+		Statement stmt;
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate(delete);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 

@@ -45,23 +45,27 @@ public final class PersonServlet extends HttpServlet {
 				"table" 		/* The table html id property */,
 				Person.class 	/* The class of the objects (rows) that will bedisplayed */
 		);
+		
+		final BeanTableHelper<Person> deletedPerson = new BeanTableHelper<Person>("",
+				"table" 		/* The table html id property */,
+				Person.class 	/* The class of the objects (rows) that will bedisplayed */
+		);
 
-		// Add columns to the new table
-
-		/*
-		 * Column 1: The name of the item (This will probably have to be changed)
-		 */
 		table.addBeanColumn("PersonID", "PersonID");
-
-		/*
-		 * Columns 2 & 3: Some random fields. These should be replaced by i.e. funding progress, or time remaining
-		 */
 		table.addBeanColumn("First Name", "FirstName");
 		table.addBeanColumn("Surname", "SurName");
 		table.addBeanColumn("Street", "Street");
 		table.addBeanColumn("Birthdate", "BirthDate");
 		table.addBeanColumn("Nationality", "Nationality");
 		table.addBeanColumn("Bounty", "Bounty");
+		
+		deletedPerson.addBeanColumn("PersonID", "PersonID");
+		deletedPerson.addBeanColumn("First Name", "FirstName");
+		deletedPerson.addBeanColumn("Surname", "SurName");
+		deletedPerson.addBeanColumn("Street", "Street");
+		deletedPerson.addBeanColumn("Birthdate", "BirthDate");
+		deletedPerson.addBeanColumn("Nationality", "Nationality");
+		deletedPerson.addBeanColumn("Bounty", "Bounty");
 
 		/*
 		 * Column 4: This is a special column. It adds a link to view the
@@ -78,9 +82,17 @@ public final class PersonServlet extends HttpServlet {
 		// The filter parameter defines what to show on the Projects page
 		final String filter = request.getParameter("filter");
 		final String category = request.getParameter("category");
-
+		final String action = request.getParameter("action");
+		
+		if(action != null && action.equals("delete")) {
+			Person person = dbInterface.getPersonById(Integer.parseInt(request.getParameter("id")));
+			if(person != null){
+				deletedPerson.addObject(person);
+				session.setAttribute("deletedPerson", deletedPerson);
+				dbInterface.deletePerson(request.getParameter("id"));
+			}
+		}
 		if (filter == null ) {
-
 			// If no filter is specified, then we display all the cases!
 			table.addObjects(this.dbInterface.getAllPerson());
 
