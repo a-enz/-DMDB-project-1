@@ -11,7 +11,11 @@ w<%@page import="ch.ethz.inf.dbproject.model.User"%>
 <h1>Person</h1>
 <%=session.getAttribute("personTable")%>
 
-
+<form action="CaseAddPerson" method="get">
+	<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
+	<input type="hidden" name="action" value="add_person" />
+	<input type="submit" value="Add Person" />
+</form>
 
 <%
 if (user != null) {
