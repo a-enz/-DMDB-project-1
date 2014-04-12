@@ -4,6 +4,9 @@ w<%@page import="ch.ethz.inf.dbproject.model.User"%>
 <%@ include file="Header.jsp" %>
 <% final User user = (User) session.getAttribute(UserManagement.SESSION_USER); %>
 
+<%=session.getAttribute("error")%>
+<%session.removeAttribute("error");%>
+
 <h1>Case Details</h1>
 
 <%=session.getAttribute("caseTable")%>

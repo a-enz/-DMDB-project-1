@@ -161,7 +161,7 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 		}
 		
 		public final String getString(final T t){
-			return "<input type=\"text\" name=\"" + name +"\">";
+			return "<input type=\"text\" name=\"" + name + super.getString(t) +"\">";
 		}
 	}
 	

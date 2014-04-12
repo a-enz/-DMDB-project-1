@@ -18,6 +18,7 @@ import ch.ethz.inf.dbproject.model.CasePerson;
 import ch.ethz.inf.dbproject.model.NoteText;
 import ch.ethz.inf.dbproject.util.UserManagement;
 import ch.ethz.inf.dbproject.util.html.BeanTableHelper;
+import ch.ethz.inf.dbproject.util.html.MessageHelper;
 
 /**
  * Servlet implementation class of Case Details Page
@@ -27,6 +28,7 @@ public final class CaseServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final DatastoreInterface dbInterface = new DatastoreInterface();
+	private final MessageHelper mh = new MessageHelper();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -99,12 +101,12 @@ public final class CaseServlet extends HttpServlet {
 				String[] personids = request.getParameterValues("person");
 				if (test != null){
 					for (String personid:personids){
-						this.dbInterface.addPersonToCase(id, personid);
+						mh.SuccessMessage("Person with the number " + personid + " added/updated.");
+						this.dbInterface.addPersonToCase(id, personid, request.getParameter("reason" + personid));
 					}
 				}
 			}
 			
-			//-----------------TODO: Add Comment------------------
 			
 			if (action !=null && action.equals("add_comment")){
 				System.out.println("Action: add a new note");
@@ -183,6 +185,9 @@ public final class CaseServlet extends HttpServlet {
 			//notetable.addLinkColumn("", "Edit Note","Case?id="+ id +"&action=edit_note&notenr=" , "NoteNr");
 			notetable.addObjects(dbInterface.getCaseNoteById(id));
 			session.setAttribute("noteTable", notetable);
+			
+			//------------------- Print All Messages ------------------
+			session.setAttribute("error", mh.toString());
 			
 		} catch (final Exception ex) {
 			ex.printStackTrace();

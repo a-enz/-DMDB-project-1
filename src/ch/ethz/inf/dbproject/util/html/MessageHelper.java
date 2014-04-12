@@ -24,6 +24,7 @@ public class MessageHelper extends HtmlHelperIface {
 		for(String message:HtmlMessages){
 			result = result + message;
 		}
+		HtmlMessages.clear();
 		return result;
 	}
 }
