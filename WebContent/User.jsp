@@ -28,7 +28,7 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 //TODO: Add possibility to create new case (requires a form) 
 	
 } else {
-	// User not logged in. Display the login form.
+	// User not logged in. Display the login and register form.
 %>
 
 	<form action="User" method="get">
@@ -49,9 +49,40 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 		</tr>
 	</table>
 	</form>
-
+	<br>
+	<h1>if you are a new User register here:</h1>
+	
+		<form action="User" method="get">
+	<input type="hidden" name="action" value="register" />
+	<table>
+		<tr>
+			<th>choose a Username</th>
+			<td><input type="text" name="newuser" value="" /></td>
+		</tr>
+		<tr>
+			<th>your real Name</th>
+			<td><input type="text" name="realname" value="" /></td>
+		</tr>
+		<tr>
+			<th>give a Password</th>
+			<td><input type="password" name="newpassword" value="" /></td>
+		</tr>
+		<tr>
+			<th>confirm the Password</th>
+			<td><input type="password" name="passwordconfirm" value="" /></td>
+		</tr>
+		<tr>
+			<th colspan="2">
+				<input type="submit" value="Register" />
+			</th>
+		</tr>
+	</table>
+	</form>
+	<%=session.getAttribute("error")%>
 <%
 }
 %>
+
+<%session.setAttribute("error","");%>
 
 <%@ include file="Footer.jsp" %>

@@ -410,6 +410,42 @@ public final class DatastoreInterface {
 			return null;			
 		}
 	}
+	
+	public final void insertUser(String username, String password, String realname) {
+		try{
+			final Statement sqlStatement = sqlConnection.createStatement();
+			
+			sqlStatement.executeUpdate("INSERT INTO User (Username, Passwort, Name) values ( '" + username + "', '" + password + "', '" + realname + "' )");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final boolean isRegistered(String username){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT * " +
+													"FROM User " +
+													"WHERE Username = '" + username + "'");
+			
+			if(rs.next()){
+				rs.close();
+				stmt.close();
+				return true;
+			}
+			else{
+				rs.close();
+				stmt.close();
+				return false;
+			}
+
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			return true;
+		}
+	}
 
 	public List<Case> searchByName(String name) {
 		List<Case> res = new ArrayList<Case>();

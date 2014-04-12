@@ -13,6 +13,7 @@ import ch.ethz.inf.dbproject.model.DatastoreInterface;
 import ch.ethz.inf.dbproject.model.User;
 import ch.ethz.inf.dbproject.util.UserManagement;
 import ch.ethz.inf.dbproject.util.html.BeanTableHelper;
+import ch.ethz.inf.dbproject.util.html.MessageHelper;
 
 @WebServlet(description = "Page that displays the user login / logout options.", urlPatterns = { "/User" })
 public final class UserServlet extends HttpServlet {
@@ -59,7 +60,6 @@ public final class UserServlet extends HttpServlet {
 			// Ask the data store interface if it knows this user
 			User user = dbInterface.getUser(username, password);
 			
-			
 			if (user != null){				
 				session.setAttribute(SESSION_USER_LOGGED_IN, true);
 				session.setAttribute(SESSION_USER, user);
@@ -67,6 +67,40 @@ public final class UserServlet extends HttpServlet {
 			// Retrieve User
 			// Store this user into the session
 			
+		}
+		
+		else if (action != null && action.trim().equals("register") && UserManagement.getCurrentlyLoggedInUser(session) == null) {
+			
+			MessageHelper mh = new MessageHelper();
+			
+			
+			final String newuser = request.getParameter("newuser");
+			final String realname = request.getParameter("realname");
+			// Note: It is really not safe to use HTML get method to send passwords.
+			// However for this project, security is not a requirement.
+			final String password = request.getParameter("newpassword");
+			final String passwordconf = request.getParameter("passwordconfirm");
+
+			//check if this user allready exists. password doesn't matter
+		
+			//check if password confirmation succeeded
+			if(password != null && !password.equals("") && newuser != null && !newuser.equals("") && realname != null || !realname.equals("")){
+				if(password.equals(passwordconf)){
+					//..and user doesn't already exist
+					if (!dbInterface.isRegistered(newuser)){
+						this.dbInterface.insertUser(newuser, password, realname);
+						mh.SuccessMessage("REGISTRATION SUCCESSFUL!");
+					}
+					else mh.ErrorMessage("Username allready exists.");
+				}
+				else mh.ErrorMessage("Password confirmation failed.");
+			}
+			else mh.ErrorMessage("Fill out all fields.");
+			// Retrieve User
+			// Store this user into the session
+			
+
+		    session.setAttribute("error", mh.toString());
 		}
 
 		//---------- show Userinformation or Login -----------
@@ -88,8 +122,6 @@ public final class UserServlet extends HttpServlet {
 			session.setAttribute(SESSION_USER_LOGGED_IN, true);
 			session.setAttribute(SESSION_USER_DETAILS, userDetails);
 		}
-
-		// TODO display registration
 
 
 		// Finally, proceed to the User.jsp page which will renden the profile
