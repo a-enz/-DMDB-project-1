@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Header.jsp" %>
 
-<h1>Search</h1>
+<h1>Case Search</h1>
 
 
 <form method="get" action="Search">
@@ -23,15 +23,18 @@
 </div>
 </form>
 
+<h1>Person Search</h1>
 
 <form method="get" action="Search">
 <div>
-	<input type="hidden" name="filter" value="attribute" />
-	Search By Attribute:
-	<input type="text" name="attribute" />
-	<input type="submit" value="Search" title="Search by Attribute" />
+	<input type="hidden" name="filter" value="personname" />
+	Search By Name:
+	<input type="text" name="personname" />
+	<input type="submit" value="Search" title="Search by PersonName" />
 </div>
 </form>
+
+
 <%
 	if((Boolean) session.getAttribute("search") == true) {
 %>

@@ -410,6 +410,32 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
+	/**************************
+	 * SEARCHES IN PERSON:
+	 ************************/
+	
+	public List<Person> searchPersonByName(String name) {
+		List<Person> res = new ArrayList<Person>();
+		String query = "SELECT p.PersonID, p.FirstName, p.SurName, p.Street, p.BirthDate, p.Nationality, p.Bounty " +
+				"FROM Person p " +
+				"WHERE p.FirstName like '" + name + "' OR p.SurName like '" +name + "'";
+		try {			
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				res.add(new Person(rs));
+			}
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return res;
+	}
+	
 	public boolean addPerson(String firstName, String surName, String street, String birthDate, String nationality, String bounty)
 	{
 		String fields = "(FirstName, SurName";

@@ -24,6 +24,16 @@ public final class Person {
 		this.Bounty = bounty;
 	}
 
+	public Person(ResultSet rs) throws SQLException {
+		this.PersonID = rs.getInt("PersonID");
+		this.FirstName = rs.getString("FirstName");
+		this.SurName = rs.getString("SurName");
+		this.Street = rs.getString("Street");
+		this.BirthDate = rs.getDate("BirthDate");
+		this.Nationality = rs.getString("Nationality");
+		this.Bounty = rs.getInt("Bounty");
+	}
+
 	public int getPersonID() {
 		return PersonID;
 	}
