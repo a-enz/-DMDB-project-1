@@ -65,13 +65,7 @@ public final class PersonDetailServlet extends HttpServlet {
 					Person.class 	/* The class of the objects (rows) that will be displayed */
 			);
 
-			// Add columns to the new table
-
 			table.addBeanColumn("PersonID", "PersonID");
-
-			/*
-			 * Columns 2 & 3: Some random fields. These should be replaced by i.e. funding progress, or time remaining
-			 */
 			table.addBeanColumn("First Name", "FirstName");
 			table.addBeanColumn("Surname", "SurName");
 			table.addBeanColumn("Street", "Street");
@@ -80,8 +74,7 @@ public final class PersonDetailServlet extends HttpServlet {
 			table.addBeanColumn("Bounty", "Bounty");
 			table.setVertical(true);
 			
-			table.addObject(this.dbInterface.getPersonById(id))
-			;
+			table.addObject(this.dbInterface.getPersonById(id));
 
 			session.setAttribute("persondetailTable", table);
 			
