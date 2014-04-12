@@ -42,6 +42,8 @@ public final class EditPersonServlet extends HttpServlet{
 		table.addBeanColumn("Nationality", "Nationality");
 		table.addBeanColumn("Bounty", "Bounty");
 		
+		
+		
 //		try {
 //			final int id = request.getParameter("id");
 //		} catch {

@@ -22,4 +22,6 @@ if (user != null) {
 <br /><br />
 See all available <a href="Cases">cases</a> and <a href="Person">Persons of Interest</a>.
 
+<%=session.getAttribute("error")%>
+
 <%@ include file="Footer.jsp" %>

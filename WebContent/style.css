@@ -137,6 +137,24 @@ table.table th {
 	background: #000;
 }
 
+div#errormessage{
+	width: 80%;
+	background: #ffecec;
+	border: 3px solid #f5aca6;
+	color: #555;
+	border-radius: 5px;
+	padding: 10px 10px 10px 36px;
+}
+
+div#successmessage{
+	width: 80%;
+	background: #e9ffd9;
+	border: 3px solid #a6ca8a;
+	color: #555;
+	border-radius: 5px;
+	padding: 10px 10px 10px 36px;
+}
+
 
 ul.nav-main,
 ul.nav-main li {

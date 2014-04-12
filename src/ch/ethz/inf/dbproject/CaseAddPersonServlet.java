@@ -67,10 +67,12 @@ public final class CaseAddPersonServlet extends HttpServlet {
 		 * Column 4: This is a special column. It adds a link to view the
 		 * Project. We need to pass the case identifier to the url. */
 		table.addCheckColumn("",	/* The header. We will leave it empty */
-				"Add Person ", 	/* What should be displayed in every row */
+				"Add Person", 	/* What should be displayed in every row */
 				"person",
 				"PersonID"); 			/* For every case displayed, the ID will be retrieved and will be attached to the url base above */
 
+		table.addEmptyTextColumn("Add a reason", "reason", "PersonID");
+		
 		// Pass the table to the session. This will allow the respective jsp page to display the table.
 		session.setAttribute("person", table);
 

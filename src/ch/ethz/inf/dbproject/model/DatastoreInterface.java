@@ -113,10 +113,7 @@ public final class DatastoreInterface {
 		final Statement sqlStatement;
 		final Integer CaseNr=id;
 		Case result = null;
-	
-		/**
-		 * TODO this method should return the case with the given id
-		 */
+
 		System.out.println("Enter getCaseByID");
 		try{
 			sqlStatement = sqlConnection.createStatement();
@@ -517,6 +514,30 @@ public final class DatastoreInterface {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean updatePerson(String id, String firstName, String surName, String street, String birthDate, String nationality, String bounty) {
+		String update = "UPDATE Person SET PersonID = '" + id;
+		String where = "WHERE PersonID = " + id;
+		
+		Statement stmt;
+		
+		if(firstName != null && firstName != "") update = update + ", FirstName = '" + firstName + "'";
+		if(surName != null && surName != "") update = update + ", SurName = '" + surName + "'";
+		if(street != null && surName != "") update = update + ", Street = '" + street + "'";
+		if(birthDate != null && birthDate != "") update = update + ", BirthDate = '" + birthDate + "'";
+		if(nationality != null && nationality != "") update = update + ", Nationality = '" + nationality + "'";
+		if(bounty != null && bounty != "") update = update + ", Bounty = '" + bounty + "'";
+		
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate(update + where);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 
