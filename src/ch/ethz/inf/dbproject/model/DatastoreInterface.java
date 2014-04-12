@@ -354,6 +354,29 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	public final List<Case> getInvolvedCases(int id){
+		List<Case> res = new ArrayList<Case>();
+		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd " +
+				"FROM Cases ca, Connected co " +
+				"WHERE ca.CaseNr =  co.CaseID AND PersonID = '" + id + "'";
+		try{
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()){
+				res.add(new Case(rs));
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
 	public final User getUser(String username, String passwort) {
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();

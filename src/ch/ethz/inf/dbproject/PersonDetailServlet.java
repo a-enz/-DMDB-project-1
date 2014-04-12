@@ -124,8 +124,24 @@ public final class PersonDetailServlet extends HttpServlet {
 				"table",
 				Case.class
 			);
-
-			casetable.addBeanColumn("", "");
+			
+			casetable.addBeanColumn("CaseNr", "CaseNr");
+			casetable.addBeanColumn("Title", "Title");
+			casetable.addBeanColumn("Date", "Date");
+			casetable.addBeanColumn("Location", "Location");
+			casetable.addBeanColumn("Status", "Status");
+			casetable.addBeanColumn("Conviction Date", "DateCon");
+			casetable.addBeanColumn("DateEnd", "DateEnd");
+			
+			casetable.addLinkColumn("",
+					"View Details", 
+					"Case?id=", 
+					"CaseNr");
+		
+			casetable.addObjects(this.dbInterface.getInvolvedCases(id));
+			
+			session.setAttribute("involvedCasesTable", casetable);
+			
 			
 		} catch (final Exception ex) {
 			ex.printStackTrace();
