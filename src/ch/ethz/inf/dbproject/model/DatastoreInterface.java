@@ -99,6 +99,15 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	public final void addPersonToCase(final int id, final String personid){
+		try{
+			final Statement sqlStatement = sqlConnection.createStatement();
+			sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role) VALUES (" + id + "," + personid + ", 'perpetrates')");
+		}catch (final SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	public final Case getCaseById(final int id) {
 		
 		final Statement sqlStatement;

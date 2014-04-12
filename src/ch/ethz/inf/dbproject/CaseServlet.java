@@ -93,6 +93,13 @@ public final class CaseServlet extends HttpServlet {
 					dbInterface.removeCaseNote(NoteNr);
 				}
 			}
+			else if (action != null && action.equals("add_person")){
+				System.out.println("Add a person to case " + id.toString());
+				String[] personids = request.getParameterValues("person");
+				for (String personid:personids){
+					this.dbInterface.addPersonToCase(id, personid);
+				}
+			}
 			
 			//-----------------TODO: Add Comment------------------
 			
