@@ -97,17 +97,29 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 		
 		private final String text;
 		private final String name;
-		private final String formname;
 		
-		public CheckColumn(final String header, final String text, final String name, final String formname, final Class<T> clazz){
-			super(header, formname, clazz);
+		public CheckColumn(final String header, final String text, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
 			this.text = text;
 			this.name = name;
-			this.formname = formname;
 		}
 		
 		public final String getString(final T t){
 			return "<input type=\"checkbox\" name=\""+ name +"\" value=\""+ super.getString(t) +"\">" + text;
+		}
+	}
+	
+	private final class TextColumn extends BeanColumn{
+		
+		private final String name;
+		
+		public TextColumn(final String header, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
+			this.name = name;
+		}
+		
+		public final String getString(final T t){
+			return "<input type=\"text\" name=\"" + name +"\" value=\"" + super.getString(t) +"\">";
 		}
 	}
 	
@@ -146,8 +158,12 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 				urlExtraParamBean, this.clazz));
 	}
 	
-	public final void addCheckColumn(final String header, final String text, final String name, final String formname){
-		this.columns.add(new CheckColumn(header, text, name, formname, this.clazz));
+	public final void addCheckColumn(final String header, final String text, final String name, final String columninformation){
+		this.columns.add(new CheckColumn(header, text, name, columninformation, this.clazz));
+	}
+	
+	public final void addTextColumn(final String header, final String name, final String columninformation){
+		this.columns.add(new TextColumn(header, name, columninformation, this.clazz));
 	}
 
 	public final void addObjects(final List<T> contentBeans) {
