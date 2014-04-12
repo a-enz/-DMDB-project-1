@@ -123,6 +123,48 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 		}
 	}
 	
+	private final class NumberColumn extends BeanColumn{
+		
+		private final String name;
+		
+		public NumberColumn(final String header, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
+			this.name = name;
+		}
+		
+		public final String getString(final T t){
+			return "<input type=\"number\" name=\"" + name +"\" value=\"" + super.getString(t) +"\">";
+		}
+	}
+	
+	private final class DateColumn extends BeanColumn{
+		
+		private final String name;
+		
+		public DateColumn(final String header, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
+			this.name = name;
+		}
+		
+		public final String getString(final T t){
+			return "<input type=\"date\" name=\"" + name +"\" value=\"" + super.getString(t) +"\">";
+		}
+	}
+	
+	private final class EmptyTextColumn extends BeanColumn{
+		
+		private final String name;
+		
+		public EmptyTextColumn(final String header, final String name, final String columninfo, final Class<T> clazz){
+			super(header, columninfo, clazz);
+			this.name = name;
+		}
+		
+		public final String getString(final T t){
+			return "<input type=\"text\" name=\"" + name +"\">";
+		}
+	}
+	
 
 	private final String tableHtmlId;
 	private final String tableHtmlClass;
@@ -164,6 +206,18 @@ public final class BeanTableHelper<T> extends HtmlHelperIface {
 	
 	public final void addTextColumn(final String header, final String name, final String columninformation){
 		this.columns.add(new TextColumn(header, name, columninformation, this.clazz));
+	}
+	
+	public final void addNumberColumn(final String header, final String name, final String columninformation){
+		this.columns.add(new NumberColumn(header, name, columninformation, this.clazz));
+	}
+	
+	public final void addDateColumn(final String header, final String name, final String columninformation){
+		this.columns.add(new DateColumn(header, name, columninformation, this.clazz));
+	}
+	
+	public final void addEmptyTextColumn(final String header, final String name, final String columninformation){
+		this.columns.add(new EmptyTextColumn(header, name, columninformation, this.clazz));
 	}
 
 	public final void addObjects(final List<T> contentBeans) {
