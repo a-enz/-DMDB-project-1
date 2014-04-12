@@ -8,6 +8,14 @@
 
 <%=session.getAttribute("persondetailTable")%>
 
+<%
+if ((Boolean) session.getAttribute("edited") == true) {	//client has just edited some entries of this person
+%>
+	Entries edited <br /> 
+<%
+}
+%>
+
 <h1>Involved Cases</h1>
 
 <%=session.getAttribute("involvedCasesTable") %>

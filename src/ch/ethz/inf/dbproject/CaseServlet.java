@@ -95,9 +95,12 @@ public final class CaseServlet extends HttpServlet {
 			}
 			else if (action != null && action.equals("add_person")){
 				System.out.println("Add a person to case " + id.toString());
+				String test = request.getParameter("person");
 				String[] personids = request.getParameterValues("person");
-				for (String personid:personids){
-					this.dbInterface.addPersonToCase(id, personid);
+				if (test != null){
+					for (String personid:personids){
+						this.dbInterface.addPersonToCase(id, personid);
+					}
 				}
 			}
 			

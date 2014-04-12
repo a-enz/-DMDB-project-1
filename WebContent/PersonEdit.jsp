@@ -10,7 +10,12 @@ if (user != null) {
 %>
 <h1>Person</h1>
 
-<%=session.getAttribute("persondetails") %>
+<form method="get" action="PersonDetail">
+	<%=session.getAttribute("editTable")%>
+	<input type="hidden" name="action" value="edit"/>
+ 	<input type="hidden" name="id" value="<%=session.getAttribute("id")%>"/>
+	<input type="submit" value="Edit"/>
+</form>
 <%
 }
 %>
