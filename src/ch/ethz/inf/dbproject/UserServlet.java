@@ -59,10 +59,35 @@ public final class UserServlet extends HttpServlet {
 			// Ask the data store interface if it knows this user
 			User user = dbInterface.getUser(username, password);
 			
-			
 			if (user != null){				
 				session.setAttribute(SESSION_USER_LOGGED_IN, true);
 				session.setAttribute(SESSION_USER, user);
+			}
+			// Retrieve User
+			// Store this user into the session
+			
+		}
+		
+		if (action != null && action.trim().equals("register") && UserManagement.getCurrentlyLoggedInUser(session) == null) {
+
+			final String newuser = request.getParameter("newuser");
+			final String realname = request.getParameter("realname");
+			// Note: It is really not safe to use HTML get method to send passwords.
+			// However for this project, security is not a requirement.
+			final String password = request.getParameter("newpassword");
+			final String passwordconf = request.getParameter("passwordconfirm");
+
+			//check if this user allready exists. password doesn't matter
+			User user = dbInterface.getUser(newuser, "%");
+		System.out.println("now checking conditions");
+			//check if password confirmation succeeded
+			if(password.equals(passwordconf)){
+				System.out.println("passwords match");
+				//..and user doesn't already exist
+				if (user == null){
+					System.out.println("conditions ok");
+					this.dbInterface.insertUser(newuser, password, realname);
+				}
 			}
 			// Retrieve User
 			// Store this user into the session
@@ -88,8 +113,6 @@ public final class UserServlet extends HttpServlet {
 			session.setAttribute(SESSION_USER_LOGGED_IN, true);
 			session.setAttribute(SESSION_USER_DETAILS, userDetails);
 		}
-
-		// TODO display registration
 
 
 		// Finally, proceed to the User.jsp page which will renden the profile

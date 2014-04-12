@@ -404,6 +404,17 @@ public final class DatastoreInterface {
 			return null;			
 		}
 	}
+	
+	public final void insertUser(String username, String password, String realname) {
+		try{
+			final Statement sqlStatement = sqlConnection.createStatement();
+			
+			sqlStatement.executeUpdate("INSERT INTO User (Username, Passwort, Name) values ( '" + username + "', '" + password + "', '" + realname + "' )");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public List<Case> searchByName(String name) {
 		List<Case> res = new ArrayList<Case>();
