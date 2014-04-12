@@ -49,6 +49,7 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 		</tr>
 	</table>
 	</form>
+	<%=session.getAttribute("loginerror")%>
 	<br>
 	<h1>if you are a new User register here:</h1>
 	
@@ -78,11 +79,12 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 		</tr>
 	</table>
 	</form>
-	<%=session.getAttribute("error")%>
+	<%=session.getAttribute("regerror")%>
 <%
 }
 %>
 
-<%session.setAttribute("error","");%>
+<%session.setAttribute("regerror","");%>
+<%session.setAttribute("loginerror", ""); %>
 
 <%@ include file="Footer.jsp" %>

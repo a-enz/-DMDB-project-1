@@ -117,6 +117,22 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	public final boolean removePersonCase(final int caseID, final String personID){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			System.out.println("about to remove personID" + personID + "connected to CaseID" + caseID);
+			int i = stmt.executeUpdate("DELETE FROM Connected WHERE CaseID = '" + caseID + "' AND PersonID = '" + personID + "' AND Role != 'perpetrator'");
+			System.out.println(i);
+			if(i>0) return true;
+			else return false;
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			System.out.println("remove person failed");
+			return false;
+		}
+	}
+	
 	public final Case getCaseById(final int id) {
 		
 		final Statement sqlStatement;

@@ -106,6 +106,13 @@ public final class CaseServlet extends HttpServlet {
 					}
 				}
 			}
+			else if (action != null && action.equals("remove_person")){
+				final String personID = request.getParameter("personid");
+				if (personID != null){
+					boolean success = this.dbInterface.removePersonCase(id, personID);
+					if(success) mh.SuccessMessage("Person with ID " + personID + " removed from this case");
+					else mh.ErrorMessage("Failed to remove Person with ID " + personID);				}
+			}
 			
 			
 			if (action !=null && action.equals("add_comment")){
@@ -165,6 +172,12 @@ public final class CaseServlet extends HttpServlet {
 			persontable.addBeanColumn("Surname","SurName");
 			persontable.addBeanColumn("Reason", "Reason");
 			
+			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+				
+				persontable.addLinkColumn("", "remove person",
+										"Case?id=" + id + "&action=remove_person&personid=",
+										"PersonID");
+			}
 
 			persontable.addObjects(dbInterface.GetCasePersonById(id));
 			session.setAttribute("personTable", persontable);
@@ -188,6 +201,7 @@ public final class CaseServlet extends HttpServlet {
 			
 			//------------------- Print All Messages ------------------
 			session.setAttribute("error", mh.toString());
+
 			
 		} catch (final Exception ex) {
 			ex.printStackTrace();

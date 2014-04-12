@@ -25,6 +25,9 @@ public final class UserServlet extends HttpServlet {
 	public final static String SESSION_USER_DETAILS = "userDetails";
 	public final static String SESSION_USER = "LOGGED_IN_USER";
 	
+	
+	private final MessageHelper mhlogin = new MessageHelper();
+	private final MessageHelper mhregister = new MessageHelper();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -64,14 +67,15 @@ public final class UserServlet extends HttpServlet {
 				session.setAttribute(SESSION_USER_LOGGED_IN, true);
 				session.setAttribute(SESSION_USER, user);
 			}
+			else mhlogin.ErrorMessage("Login Failed");
 			// Retrieve User
 			// Store this user into the session
+			
+			session.setAttribute("loginerror", mhlogin.toString());
 			
 		}
 		
 		else if (action != null && action.trim().equals("register") && UserManagement.getCurrentlyLoggedInUser(session) == null) {
-			
-			MessageHelper mh = new MessageHelper();
 			
 			
 			final String newuser = request.getParameter("newuser");
@@ -89,18 +93,18 @@ public final class UserServlet extends HttpServlet {
 					//..and user doesn't already exist
 					if (!dbInterface.isRegistered(newuser)){
 						this.dbInterface.insertUser(newuser, password, realname);
-						mh.SuccessMessage("REGISTRATION SUCCESSFUL!");
+						mhregister.SuccessMessage("REGISTRATION SUCCESSFUL!");
 					}
-					else mh.ErrorMessage("Username allready exists.");
+					else mhregister.ErrorMessage("Username allready exists.");
 				}
-				else mh.ErrorMessage("Password confirmation failed.");
+				else mhregister.ErrorMessage("Password confirmation failed.");
 			}
-			else mh.ErrorMessage("Fill out all fields.");
+			else mhregister.ErrorMessage("Fill out all fields.");
 			// Retrieve User
 			// Store this user into the session
 			
 
-		    session.setAttribute("error", mh.toString());
+		    session.setAttribute("regerror", mhregister.toString());
 		}
 
 		//---------- show Userinformation or Login -----------
