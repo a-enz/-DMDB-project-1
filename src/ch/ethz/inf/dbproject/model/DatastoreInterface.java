@@ -699,6 +699,8 @@ public final class DatastoreInterface {
 		else values = values + "'" + title + "', '" + date + "'";
 		
 		if(location != null && !location.equals("")) {insert = insert + ", Location"; values = values + ", '" + location + "'";}
+		insert = insert + ", Status";
+		values = values + ", 'open'";
 		if(dateCon != null && !dateCon.equals("")) {insert = insert + ", DateCon"; values = values + ", '" + dateCon  + "'";}
 		if(dateEnd != null && !dateEnd.equals("")) {insert = insert + ", DateEnd"; values = values + ", '" + dateEnd  + "'";}
 		
@@ -744,6 +746,8 @@ public final class DatastoreInterface {
 		else values = values + "'" + title + "', '" + date + "'";
 		
 		if(location != null && !location.equals("")) {insert = insert + ", Location"; values = values + ", '" + location + "'";}
+		insert = insert + ", Status";
+		values = values + ", 'open'";
 		if(dateCon != null && !dateCon.equals("")) {insert = insert + ", DateCon"; values = values + ", '" + dateCon  + "'";}
 		if(dateEnd != null && !dateEnd.equals("")) {insert = insert + ", DateEnd"; values = values + ", '" + dateEnd  + "'";}
 		
@@ -766,4 +770,25 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	public List<Category> getCategoryByCase(String id) {
+		String query = "SELECT Category.CatName, Category.Parent FROM ContainedIn, Category, Cases WHERE ContainedIn.CaseID = Cases.CaseNr AND ContainedIn.CatName = Category.CatName AND CaseID = " + id;
+		List<Category> res = new ArrayList<Category>();
+		
+		Statement stmt;
+		
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.execute(query);
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()){
+				res.add(new Category(rs.getString("CatName"), rs.getString("Parent")));
+			}
+			rs.close();
+			stmt.close();
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

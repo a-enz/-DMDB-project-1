@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ch.ethz.inf.dbproject.model.Category;
 import ch.ethz.inf.dbproject.model.Conviction;
 import ch.ethz.inf.dbproject.model.Comment;
 import ch.ethz.inf.dbproject.model.DatastoreInterface;
@@ -152,14 +153,8 @@ public final class CaseServlet extends HttpServlet {
 					"table" /* The table html class property */,
 					Case.class 	/* The class of the objects (rows) that will be displayed */
 			);
-
-			// Add columns to the new table
-
+			
 			table.addBeanColumn("CaseNr", "CaseNr");
-
-			/*
-			 * Columns 2 & 3: Some random fields. These should be replaced by i.e. funding progress, or time remaining
-			 */
 			table.addBeanColumn("Title", "Title");
 			table.addBeanColumn("Date", "Date");
 			table.addBeanColumn("Location", "Location");
@@ -171,7 +166,21 @@ public final class CaseServlet extends HttpServlet {
 			table.setVertical(true);
 			
 
-			session.setAttribute("caseTable", table);	
+			session.setAttribute("caseTable", table);
+			
+			//------------------- Create Category Table --------------------
+			
+			final BeanTableHelper<Category> catTable = new BeanTableHelper<Category>(
+					"category" 		/* The table html id property */,
+					"table" /* The table html class property */,
+					Category.class 	/* The class of the objects (rows) that will be displayed */
+			);
+			
+			catTable.addBeanColumn("Category Name", "CatName");
+			catTable.addObjects(dbInterface.getCategoryByCase(idString));
+			session.setAttribute("cattable", catTable);
+			
+			
 			
 			//------------------- Create Person Table ----------------------
 			

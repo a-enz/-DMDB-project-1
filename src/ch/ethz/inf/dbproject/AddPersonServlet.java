@@ -46,18 +46,17 @@ public final class AddPersonServlet extends HttpServlet {
 		final String street = request.getParameter("Street");
 		final String birthDate = request.getParameter("BirthDate");
 		final String nationality = request.getParameter("Nationality");
-		final String bounty = request.getParameter("Bounty");
 		
-		if(dbInterface.addPerson(firstName, surName, street, birthDate, nationality, bounty)) {
+		if(dbInterface.addPerson(firstName, surName, street, birthDate, nationality, "0")) {
 			session.setAttribute("valid_input", true);
 			session.setAttribute("added", true);
-			session.setAttribute("personinfo", printInputHtml(firstName, surName, street, birthDate, nationality, bounty));
+			session.setAttribute("personinfo", printInputHtml(firstName, surName, street, birthDate, nationality, "0"));
 		}
 		else {
 			session.setAttribute("valid_input", false);
 		}
 		
-		showInput(firstName, surName, street, birthDate, nationality, bounty);
+		showInput(firstName, surName, street, birthDate, nationality, "0");
 		
 		
 		//System.out.println((request.getServletContext() == null) ? "Context Null" : "Context Not null");

@@ -11,7 +11,6 @@
 		<tr><th>Street: </th> <th> <input type="text" name="Street" /></th></tr>
 		<tr><th>Birthdate: </th><th><input type="date" name="BirthDate"/></th></tr>
 		<tr><th>Nationality: </th><th><input type="text" name="Nationality"/></th></tr>
-		<tr><th>Bounty: </th><th><input type="number" name="Bounty" step="100"/></th></tr>
 	</table>
 	
 	*Mandatory field <br/>

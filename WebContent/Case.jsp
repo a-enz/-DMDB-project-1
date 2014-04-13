@@ -10,7 +10,12 @@
 
 <%=session.getAttribute("caseTable")%>
 
+<h1>Category</h1>
+
+<%=session.getAttribute("cattable")%>
+
 <h1>Person</h1>
+
 <%=session.getAttribute("personTable")%>
 
 <%

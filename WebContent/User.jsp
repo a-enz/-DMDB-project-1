@@ -23,8 +23,6 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 	</form>
 
 <%
-
-	
 } else {
 	// User not logged in. Display the login and register form.
 %>
@@ -57,19 +55,19 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 	<input type="hidden" name="action" value="register" />
 	<table>
 		<tr>
-			<th>choose a Username</th>
+			<th>Username</th>
 			<td><input type="text" name="newuser" value="" /></td>
 		</tr>
 		<tr>
-			<th>your real Name</th>
+			<th>Name</th>
 			<td><input type="text" name="realname" value="" /></td>
 		</tr>
 		<tr>
-			<th>give a Password</th>
+			<th>Password</th>
 			<td><input type="password" name="newpassword" value="" /></td>
 		</tr>
 		<tr>
-			<th>confirm the Password</th>
+			<th>Confirm password</th>
 			<td><input type="password" name="passwordconfirm" value="" /></td>
 		</tr>
 		<tr>
