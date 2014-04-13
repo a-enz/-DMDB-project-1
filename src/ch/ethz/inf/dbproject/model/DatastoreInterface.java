@@ -706,4 +706,13 @@ public final class DatastoreInterface {
 		}
 		return res;
 	}
+	
+	public void updatePersonBounty(){
+		try {			
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT ");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
