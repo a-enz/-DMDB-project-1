@@ -691,5 +691,18 @@ public final class DatastoreInterface {
 		}
 	}
 
-
+	public List<Category> getAllCategories() {
+		String query = "SELECT * FROM Category";
+		List<Category> res = new ArrayList<Category>();
+		try {			
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				res.add(new Category(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
