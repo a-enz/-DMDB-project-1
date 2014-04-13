@@ -108,7 +108,7 @@ public final class DatastoreInterface {
 			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
 
 			
-			if (status.equals("close")){
+			if (status.equals("closed")){
 				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'perpetrator' WHERE CaseID = " + id + " AND Role = 'suspect'");
 			}
 			else if (status.equals("open")){
@@ -558,6 +558,47 @@ public final class DatastoreInterface {
 			return true;
 		}
 	}
+	
+	public final int countOpenCases(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS openCount FROM Cases WHERE Status = 'open'");
+			System.out.println("success");
+			rs.last();
+			return rs.getInt("openCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("shit");
+			return 0;
+		}
+	}
+	
+	public final int countClosedCases(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS closedCount FROM Cases WHERE Status = 'closed'");
+			rs.last();
+			return rs.getInt("closedCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public final int countPerpetrators(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS pCount FROM Person p, Connected c WHERE p.PersonID = c.PersonID AND c.Role = 'perpetrator'");
+			rs.last();
+			return rs.getInt("pCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	public List<Case> searchByName(String name) {
 		List<Case> res = new ArrayList<Case>();
@@ -734,7 +775,10 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> c15f6aff20cec859732565664d106154c7a056b5
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -757,7 +801,12 @@ public final class DatastoreInterface {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> c15f6aff20cec859732565664d106154c7a056b5
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -790,5 +839,8 @@ public final class DatastoreInterface {
 		}
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> c15f6aff20cec859732565664d106154c7a056b5
 }
