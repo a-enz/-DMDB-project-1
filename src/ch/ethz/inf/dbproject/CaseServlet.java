@@ -55,6 +55,8 @@ public final class CaseServlet extends HttpServlet {
 
 			final Integer id = Integer.parseInt(idString);
 			session.setAttribute("id", id);
+			session.setAttribute("removesuccess", false);
+			session.setAttribute("cataddsuccess", "");
 
 			session.setAttribute("is_closed", dbInterface.isClosed(id));
 
@@ -142,6 +144,29 @@ public final class CaseServlet extends HttpServlet {
 				}
 			}
 			
+			//---------------- Create Category Table -----------------
+			
+			String catName = request.getParameter("addcat");
+			
+			final BeanTableHelper<Category> catAddTable = new BeanTableHelper<Category>(
+					"addcategory" 		/* The table html id property */,
+					"table" /* The table html class property */,
+					Category.class 	/* The class of the objects (rows) that will be displayed */
+			);
+			
+			catAddTable.addBeanColumn("Category Name", "CatName");
+			catAddTable.addLinkColumn("", "add Category",
+									"Case?id=" + id + "&action=addcat&addcat=",
+									"CatName");
+			
+			if(action != null && action.equals("addcat") && catName != null) {	//add case
+				mh.SuccessMessage("Category successfully added");
+				if(dbInterface.addCatToCase(idString, catName)) session.setAttribute("cataddsuccess", mh.toString());
+			}
+			
+			catAddTable.addObjects(dbInterface.getExternalCatFromCase(idString));
+			session.setAttribute("addcattable", catAddTable);
+			
 			//---------------- Create Case Table -----------------
 			
 			/*******************************************************
@@ -168,7 +193,11 @@ public final class CaseServlet extends HttpServlet {
 
 			session.setAttribute("caseTable", table);
 			
-			//------------------- Create Category Table --------------------
+			//------------------- Remove Category Table --------------------
+			catName = request.getParameter("removecat");
+			if(action != null && action.equals("removecat") && catName != null) {
+				if(dbInterface.removeCatFromCase(idString, catName)) session.setAttribute("catsuccess", true); 
+			}
 			
 			final BeanTableHelper<Category> catTable = new BeanTableHelper<Category>(
 					"category" 		/* The table html id property */,
@@ -177,6 +206,14 @@ public final class CaseServlet extends HttpServlet {
 			);
 			
 			catTable.addBeanColumn("Category Name", "CatName");
+			
+			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+				
+				catTable.addLinkColumn("", "remove Category",
+										"Case?id=" + id + "&action=removecat&removecat=",
+										"CatName");
+			}
+			
 			catTable.addObjects(dbInterface.getCategoryByCase(idString));
 			session.setAttribute("cattable", catTable);
 			
@@ -232,8 +269,6 @@ public final class CaseServlet extends HttpServlet {
 					"Case?id="+ id +"&action=remove_note&notenr=",
 					"NoteNr");
 			}
-			
-
 			
 			notetable.addObjects(dbInterface.getCaseNoteById(id));
 			session.setAttribute("noteTable", notetable);

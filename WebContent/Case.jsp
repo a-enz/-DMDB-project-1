@@ -4,7 +4,9 @@
 <%@ include file="Header.jsp" %>
 
 <%=session.getAttribute("error")%>
+<%=session.getAttribute("cataddsuccess")%>
 <%session.removeAttribute("error");%>
+<%session.removeAttribute("cataddsuccess");%>
 
 <h1>Case Details</h1>
 
@@ -67,7 +69,11 @@ if (user != null) {
 		<input type ="submit" value="Submit" />
 	</form>
 	
+	<h1>Link to Category</h1>
 	
+	<form action="Case" method ="get">
+		<%=session.getAttribute("addcattable")%>
+	</form>
 
 	<h1>Note</h1>
 	

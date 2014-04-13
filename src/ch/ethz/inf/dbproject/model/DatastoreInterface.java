@@ -208,11 +208,14 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM Cases cas, ContainIn con, Category cat WHERE  "); //TODO: Implement this
+			final ResultSet rs = stmt.executeQuery(	"SELECT cas.* " +
+													"FROM Cases cas, ContainedIn contin " +
+													"WHERE cas.CaseNr = contin.CaseID " +
+													"AND contin.CatName = '" + Category + "'");
 			final List<Case> cases = new ArrayList<Case>(); 
 			while (rs.next()) {
-				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
-			}
+				cases.add(new Case(rs));
+						}
 			
 			rs.close();
 			stmt.close();
@@ -777,7 +780,7 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-	
+
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -800,8 +803,8 @@ public final class DatastoreInterface {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -838,7 +841,7 @@ public final class DatastoreInterface {
 	
 	
 	public List<Category> getCategoryByCase(String id) {
-		String query = "SELECT Category.CatName, Category.Parent FROM ContainedIn, Category, Cases WHERE ContainedIn.CaseID = Cases.CaseNr AND ContainedIn.CatName = Category.CatName AND CaseID = " + id;
+		String query = "SELECT Category.CatName, Category.Parent FROM ContainedIn, Category WHERE ContainedIn.CatName = Category.CatName AND ContainedIn.CaseID = " + id;
 		List<Category> res = new ArrayList<Category>();
 		
 		Statement stmt;
@@ -858,4 +861,62 @@ public final class DatastoreInterface {
 			return null;
 		}
 	}
+	
+	
+	public boolean removeCatFromCase(String id, String catName) {
+		String update = "DELETE FROM ContainedIn WHERE CaseID = " + id + " AND CatName = '" + catName + "'";
+		
+		Statement stmt;
+		
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.execute(update);
+			stmt.close();
+			return true;
+		} catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//returns all categories not linked to a case
+	public List<Category> getExternalCatFromCase(String id) {
+		String query = "SELECT ca1.CatName, ca1.Parent FROM Category ca1 WHERE ca1.CatName NOT IN (";
+		String subquery = "SELECT ca2.CatName FROM Category ca2, ContainedIn co2 WHERE ca2.CatName = co2.CatName AND co2.CaseID = " + id + ")";
+		List<Category> res = new ArrayList<Category>();
+		
+		Statement stmt;
+		
+		try {
+			//System.out.println(query + subquery);
+			stmt = this.sqlConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query + subquery);
+			while(rs.next()) {
+				res.add(new Category(rs.getString("CatName"), rs.getString("Parent")));
+			}
+			rs.close();
+			stmt.close();
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean addCatToCase(String id, String catName) {
+		String update = "INSERT INTO ContainedIn (CaseID, CatName) VALUES('" + id + "', '" + catName + "')";
+		
+		Statement stmt;
+		
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.execute(update);
+			stmt.close();
+			return true;
+		} catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
