@@ -856,4 +856,20 @@ public final class DatastoreInterface {
 			return null;
 		}
 	}
+	
+	public boolean removeCatFromCase(String id, String catName) {
+		String update = "DELETE FROM ContainedIn WHERE CaseID = " + id + " AND CatName = '" + catName + "'";
+		
+		Statement stmt;
+		
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.execute(update);
+			stmt.close();
+			return true;
+		} catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
