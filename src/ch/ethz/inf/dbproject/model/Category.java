@@ -8,25 +8,25 @@ import java.sql.SQLException;
  */
 public final class Category {
 
-	private final String name;
-	private final String parent;
+	private final String CatName;
+	private final String Parent;
 
 	public Category(final String name, final String parent) {
-		this.name = name;
-		this.parent = parent;
+		this.CatName = name;
+		this.Parent = parent;
 	}
 	
 	public Category(ResultSet rs) throws SQLException{
-		this.name = rs.getString("CatName");
-		this.parent = rs.getString("Parent");
+		this.CatName = rs.getString("CatName");
+		this.Parent = rs.getString("Parent");
 	}
 
-	public final String getName() {
-		return name;
+	public final String getCatName() {
+		return CatName;
 	}
 
 	public String getParent() {
-		return parent;
+		return Parent;
 	}
 	
 }

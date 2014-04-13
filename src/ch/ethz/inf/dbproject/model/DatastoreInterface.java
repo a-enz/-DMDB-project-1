@@ -767,9 +767,55 @@ public final class DatastoreInterface {
 			while (rs.next()) {
 				res.add(new Category(rs));
 			}
+			stmt.close();
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
+	
+<<<<<<< HEAD
+	public void updatePersonBounty(){
+		try {			
+			final Statement stmt = this.sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT ");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+=======
+	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
+		String insert = "INSERT INTO Cases (Title, Date";
+		String values = " VALUES(";
+		
+		Statement stmt;
+
+		if(title == null || title.equals("") || date == null || date.equals("")) {System.out.println("fuckedup");return false;}		//invalid input
+		else values = values + "'" + title + "', '" + date + "'";
+		
+		if(location != null && !location.equals("")) {insert = insert + ", Location"; values = values + ", '" + location + "'";}
+		if(dateCon != null && !dateCon.equals("")) {insert = insert + ", DateCon"; values = values + ", '" + dateCon  + "'";}
+		if(dateEnd != null && !dateEnd.equals("")) {insert = insert + ", DateEnd"; values = values + ", '" + dateEnd  + "'";}
+		
+		values = values + ")";
+		insert = insert + ")";
+
+		try {
+			stmt = this.sqlConnection.createStatement();
+			stmt.addBatch(insert + values);
+			for(int i = 0; i < cats.length; i++) {
+				stmt.addBatch("INSERT INTO ContainedIn (CaseID, CatName) VALUES(LAST_INSERT_ID(), '" + cats[i] + "')");
+			}
+			//System.out.println(cats.length);
+			stmt.executeBatch();
+			stmt.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+>>>>>>> 09bac7e4516361e38bc4239f78370c7005978eca
 }

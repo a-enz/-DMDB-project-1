@@ -37,7 +37,14 @@ public final class PersonServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		final HttpSession session = request.getSession(true);
-
+		
+		/*******************************************************
+		 * Calculate the Bounty for each Person
+		 *******************************************************/		
+		
+		
+		
+		
 		/*******************************************************
 		 * Construct a table to present all our results
 		 *******************************************************/
