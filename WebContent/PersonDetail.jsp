@@ -4,6 +4,9 @@
 <%@ include file="Header.jsp" %>
 <% final User user = (User) session.getAttribute(UserManagement.SESSION_USER); %>
 
+<%=session.getAttribute("error") %>
+<% session.removeAttribute("error"); %>
+
 <h1>Person Details</h1>
 
 <%=session.getAttribute("persondetailTable")%>
