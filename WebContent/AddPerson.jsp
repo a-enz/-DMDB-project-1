@@ -4,13 +4,16 @@
 <h1>Add Person</h1>
 
 <form action="AddPerson" method="get">
-	Firstname*: <input type="text" name="FirstName"/><br/>
-	Surname*: <input type="text" name="SurName"/><br/>
-	Street: <input type="text" name="Street" /><br/>
-	Birthdate: <input type="date" name="BirthDate"/><br/>
-	Nationality: <input type="text" name="Nationality"/><br/>
-	<!-- TODO: Implement editing option -->
-	Bounty: <input type="number" name="Bounty" step="100"/><br/>
+	
+	<table style="text-align: left">
+		<tr><th>Firstname*: </th><th><input type="text" name="FirstName"/></th></tr>
+		<tr><th>Surname*: </th><th><input type="text" name="SurName"/></th></tr>
+		<tr><th>Street: </th> <th> <input type="text" name="Street" /></th></tr>
+		<tr><th>Birthdate: </th><th><input type="date" name="BirthDate"/></th></tr>
+		<tr><th>Nationality: </th><th><input type="text" name="Nationality"/></th></tr>
+		<tr><th>Bounty: </th><th><input type="number" name="Bounty" step="100"/></th></tr>
+	</table>
+	
 	*Mandatory field <br/>
 	<input type="submit" value="Add" title="AddPerson"/> <br/> <br/>
 </form>

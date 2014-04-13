@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ch.ethz.inf.dbproject.model.Case;
+import ch.ethz.inf.dbproject.model.Category;
 import ch.ethz.inf.dbproject.model.DatastoreInterface;
 import ch.ethz.inf.dbproject.util.html.BeanTableHelper;
 
@@ -34,8 +35,16 @@ public class AddCaseServlet extends HttpServlet{
 				Case.class 	/* The class of the objects (rows) that will be displayed */
 		);
 		
+		final BeanTableHelper<Category> catTable = new BeanTableHelper<Category>(
+				"category",
+				"table",
+				Category.class);
+		
 		session.setAttribute("added", false);
 		
+		catTable.addBeanColumn("Name", "CatName");
+		catTable.addBeanColumn("Parent Category", "Parent");
+		catTable.addCheckColumn("Add", "", "check", "CatName");
 		table.addBeanColumn("Title", "Title");
 		table.addBeanColumn("Date", "Date");
 		table.addBeanColumn("Location", "Location");
