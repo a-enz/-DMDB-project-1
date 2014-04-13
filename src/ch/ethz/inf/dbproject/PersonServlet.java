@@ -22,7 +22,7 @@ public final class PersonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final DatastoreInterface dbInterface = new DatastoreInterface();
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -42,7 +42,7 @@ public final class PersonServlet extends HttpServlet {
 		 * Calculate the Bounty for each Person
 		 *******************************************************/		
 		
-		
+		dbInterface.updatePersonBounty();
 		
 		
 		/*******************************************************

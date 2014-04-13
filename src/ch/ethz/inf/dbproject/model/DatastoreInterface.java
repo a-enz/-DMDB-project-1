@@ -734,16 +734,30 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-<<<<<<< HEAD
+
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT ");
+			final Statement stmt2 = this.sqlConnection.createStatement();
+			
+			final ResultSet rs = stmt.executeQuery("SELECT per.PersonID as PersonID, sum(cat.Bounty) as Bounty " +
+													"FROM Person per, Connected con, Cases cas, ContainedIn contin, Category cat " +
+													"WHERE per.PersonID = con.PersonID " +
+													"AND con.CaseID = cas.CaseNr " +
+													"AND cas.CaseNr = contin.CaseID " +
+													"AND contin.CatName = cat.CatName " +
+													"AND con.Role = 'perpetrator' " +
+													"GROUP BY per.PersonID");
+			while(rs.next()){
+				stmt2.executeUpdate("UPDATE Person SET Bounty = " + rs.getInt("Bounty") + " WHERE PersonID = " + rs.getInt("PersonID"));
+			}
+			stmt.close();
+			stmt2.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-=======
+
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -776,5 +790,5 @@ public final class DatastoreInterface {
 		}
 	}
 	
->>>>>>> 09bac7e4516361e38bc4239f78370c7005978eca
+
 }
