@@ -106,16 +106,14 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
-<<<<<<< HEAD
+			
 			if (status.equals("close")){
 				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'perpetrator' WHERE CaseID = " + id + " AND Role = 'suspect'");
 			}
 			else if (status.equals("open")){
 				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'suspect' WHERE CaseID = " + id + " AND Role = 'perpetrator'");
 			}
-=======
 			sqlStatement.close();
->>>>>>> 10c25e938d76178d118aab8c2868cabbf65664d6
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}
