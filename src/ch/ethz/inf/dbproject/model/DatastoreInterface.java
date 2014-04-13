@@ -533,6 +533,31 @@ public final class DatastoreInterface {
 			return true;
 		}
 	}
+	
+	public final boolean isClosed(int caseID){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT * " +
+													"FROM Cases " +
+													"WHERE CaseNr = '" + caseID + "' AND Status = 'closed'");
+			
+			if(rs.next()){
+				rs.close();
+				stmt.close();
+				return true;
+			}
+			else{
+				rs.close();
+				stmt.close();
+				return false;
+			}
+
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			return true;
+		}
+	}
 
 	public List<Case> searchByName(String name) {
 		List<Case> res = new ArrayList<Case>();
