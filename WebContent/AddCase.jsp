@@ -14,6 +14,9 @@
 	<tr><th>Enddate:</th><th> <input type="date" name="DateEnd"></th></tr>
 </table>
 *Mandatory field<br/>
+
+<%= session.getAttribute("cattable") %> <br />
+
 <input type="submit" value="Add" title="AddCase"/>
 
 
@@ -29,11 +32,14 @@
 <%
 	if((Boolean) session.getAttribute("added") == true) {
 %>
-		Person successfully added <br/>
-		<%= session.getAttribute("result") %>
+		<br />
+		<%= session.getAttribute("success") %> <br />
+		<%= session.getAttribute("result") %> <br />
+		<%= session.getAttribute("resultcat") %>
 <%
 }
 %>
+<%session.setAttribute("success", "");%>
 
 
 
