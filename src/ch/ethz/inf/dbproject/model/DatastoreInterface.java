@@ -775,7 +775,6 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-<<<<<<< HEAD
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -784,7 +783,8 @@ public final class DatastoreInterface {
 			e.printStackTrace();
 		}
 	}
-=======
+	
+	
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -817,5 +817,4 @@ public final class DatastoreInterface {
 		}
 	}
 	
->>>>>>> 09bac7e4516361e38bc4239f78370c7005978eca
 }
