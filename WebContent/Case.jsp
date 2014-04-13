@@ -26,7 +26,7 @@ if (user != null) {
 	
 	<form action="Case" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
-		<input type="hidden" name="action" value="edit_case" />
+		<input type="hidden" name="action" value="edit_case"/>
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
 		<h1>Edit Informations</h1>
 		<br/>
