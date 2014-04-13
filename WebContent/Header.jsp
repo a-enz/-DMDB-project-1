@@ -1,5 +1,11 @@
+<%@page import="ch.ethz.inf.dbproject.model.User"%>
+<%@page import="ch.ethz.inf.dbproject.util.UserManagement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%
+final User user = (User) session.getAttribute(UserManagement.SESSION_USER);
+%>
 
 <html>
 	
@@ -30,7 +36,13 @@
 				<ul class="nav-sub">
 			    	<li><a href="Person?filter=mostWanted">Most Wanted</a></li>
 					<li><a href="PersonNote">Note of Person</a></li>
-					<li><a href="AddPerson">Add a new Person</a>
+					<%
+					if (user != null) {
+					%>
+						<li><a href="AddPerson">Add a new Person</a></li>
+					<%
+					}
+					%>
 				</ul>
 				</li>
 			    
@@ -40,7 +52,13 @@
 					<li><a href="Cases?filter=closed">Closed</a></li>
 					<li><a href="Cases?filter=recent">Most Recent</a></li>
 					<li><a href="Cases?filter=oldest">Oldest Unsolved</a></li>
-					<li><a href="AddCase">Add a new Case</a></li>
+					<%
+					if (user != null) {
+					%>
+						<li><a href="AddCase">Add a new Case</a></li>
+					<%
+					}
+					%>
 				</ul>
 				</li>
 				
