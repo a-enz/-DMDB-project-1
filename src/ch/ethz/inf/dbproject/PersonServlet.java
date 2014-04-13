@@ -22,7 +22,7 @@ public final class PersonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final DatastoreInterface dbInterface = new DatastoreInterface();
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -37,7 +37,14 @@ public final class PersonServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		final HttpSession session = request.getSession(true);
-
+		
+		/*******************************************************
+		 * Calculate the Bounty for each Person
+		 *******************************************************/		
+		
+		dbInterface.updatePersonBounty();
+		
+		
 		/*******************************************************
 		 * Construct a table to present all our results
 		 *******************************************************/

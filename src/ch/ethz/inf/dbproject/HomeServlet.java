@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ch.ethz.inf.dbproject.model.DatastoreInterface;
 import ch.ethz.inf.dbproject.util.html.MessageHelper;
 
 /**
@@ -18,7 +19,8 @@ import ch.ethz.inf.dbproject.util.html.MessageHelper;
 public final class HomeServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-		
+
+	private final DatastoreInterface dbInterface = new DatastoreInterface();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,6 +36,9 @@ public final class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final HttpSession session = request.getSession(true);
 
+	    session.setAttribute("openCasesCount", this.dbInterface.countOpenCases());
+	    session.setAttribute("closedCasesCount", this.dbInterface.countClosedCases());
+	    session.setAttribute("perpetratorCount", this.dbInterface.countPerpetrators());
 	    
         this.getServletContext().getRequestDispatcher("/Home.jsp").forward(request, response);	  
 	}
