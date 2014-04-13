@@ -55,6 +55,7 @@ public final class CaseServlet extends HttpServlet {
 
 			final Integer id = Integer.parseInt(idString);
 			session.setAttribute("id", id);
+			session.setAttribute("removesuccess", false);
 
 			session.setAttribute("is_closed", dbInterface.isClosed(id));
 
@@ -169,6 +170,10 @@ public final class CaseServlet extends HttpServlet {
 			session.setAttribute("caseTable", table);
 			
 			//------------------- Create Category Table --------------------
+			final String catName = request.getParameter("removecat");
+			if(action != null && action.equals("removecat") && catName != null) {
+				if(dbInterface.removeCatFromCase(idString, catName)) session.setAttribute("catsuccess", true); 
+			}
 			
 			final BeanTableHelper<Category> catTable = new BeanTableHelper<Category>(
 					"category" 		/* The table html id property */,
@@ -177,6 +182,14 @@ public final class CaseServlet extends HttpServlet {
 			);
 			
 			catTable.addBeanColumn("Category Name", "CatName");
+			
+			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+				
+				catTable.addLinkColumn("", "remove Category",
+										"Case?id=" + id + "&action=removecat&removecat=",
+										"CatName");
+			}
+			
 			catTable.addObjects(dbInterface.getCategoryByCase(idString));
 			session.setAttribute("cattable", catTable);
 			
