@@ -46,8 +46,10 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 			</th>
 		</tr>
 	</table>
-	</form>
-	<%=session.getAttribute("loginerror")%>
+	</form>	
+	<%if(session.getAttribute("loginerror") != null){ %>
+		<%=session.getAttribute("loginerror")%>
+	<%} %>
 	<br>
 	<h1>if you are a new User register here:</h1>
 	
@@ -77,7 +79,9 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 		</tr>
 	</table>
 	</form>
-	<%=session.getAttribute("regerror")%>
+	<%if(session.getAttribute("regerror") != null){ %>
+		<%=session.getAttribute("regerror")%>
+	<%} %>
 <%
 }
 %>

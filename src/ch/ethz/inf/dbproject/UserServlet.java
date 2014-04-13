@@ -87,7 +87,7 @@ public final class UserServlet extends HttpServlet {
 			//check if this user allready exists. password doesn't matter
 		
 			//check if password confirmation succeeded
-			if(password != null && !password.equals("") && newuser != null && !newuser.equals("") && realname != null || !realname.equals("")){
+			if(password != null && !password.equals("") && newuser != null && !newuser.equals("") && realname != null && !realname.equals("")){
 				if(password.equals(passwordconf)){
 					//..and user doesn't already exist
 					if (!dbInterface.isRegistered(newuser)){

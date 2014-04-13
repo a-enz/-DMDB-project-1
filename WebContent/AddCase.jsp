@@ -5,13 +5,18 @@
 
 <form action="AddCase" method="get">
 	<input type="hidden" name="action" value="add">
-	Title*: <input type="text" name="Title"/><br/>
-	Date*: <input type="date" name="Date"/><br/>
-	Location: <input type="text" name="Location" /><br/>
-	Date of Conviction: <input type="date" name="DateCon"/><br/>
-	Enddate: <input type="date" name="DateEnd"><br/>
-	*Mandatory field <br/>
-	<input type="submit" value="Add" title="AddCase"/> <br/> <br/>
+
+<table style="text-align:left">
+	<tr><th>Title*:</th><th> <input type="text" name="Title"/></th></tr>
+	<tr><th>Date*:</th><th> <input type="date" name="Date"/></th></tr>
+	<tr><th>Location:</th><th> <input type="text" name="Location" /></th></tr>
+	<tr><th>Date of Conviction:</th><th> <input type="date" name="DateCon"/></th></tr>
+	<tr><th>Enddate:</th><th> <input type="date" name="DateEnd"></th></tr>
+</table>
+*Mandatory field<br/>
+<input type="submit" value="Add" title="AddCase"/>
+
+
 </form>
 
 <%-- <%
