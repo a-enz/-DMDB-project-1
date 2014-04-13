@@ -106,7 +106,10 @@ public final class DatastoreInterface {
 			final Statement sqlStatement = sqlConnection.createStatement();
 
 			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
+<<<<<<< HEAD
+=======
 
+>>>>>>> e098170384b3164c431bdd8f85950b3a135669d4
 			if (status.equals("close")){
 				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'perpetrator' WHERE CaseID = " + id + " AND Role = 'suspect'");
 			}
@@ -207,7 +210,7 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM Cases, ContainIn "); //TODO: Implement this
+			final ResultSet rs = stmt.executeQuery("Select * FROM Cases cas, ContainIn con, Category cat WHERE  "); //TODO: Implement this
 			final List<Case> cases = new ArrayList<Case>(); 
 			while (rs.next()) {
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
@@ -284,7 +287,7 @@ public final class DatastoreInterface {
 	public final List<Case> getClosedCases(){
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'closed'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'close'");
 			final List <Case> cases = new ArrayList<Case>();
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
@@ -378,7 +381,17 @@ public final class DatastoreInterface {
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
 			stmt.executeUpdate("DELETE FROM CaseNote WHERE NoteNr = " + id);
-			System.out.println("DELETE FROM CaseNote WHERE NoteNr = " + id);
+			stmt.close();
+		}catch (final SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public final void updateCaseNote(final String noteNr, final String text){
+		try{
+			final Statement stmt = this.sqlConnection.createStatement();
+			stmt.executeUpdate("UPDATE CaseNote SET Text='" + text + "' WHERE NoteNr = " + noteNr);
+			stmt.close();
 		}catch (final SQLException ex){
 			ex.printStackTrace();
 		}

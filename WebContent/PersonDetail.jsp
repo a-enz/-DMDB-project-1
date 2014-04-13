@@ -3,6 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Header.jsp" %>
 
+<%=session.getAttribute("error") %>
+<% session.removeAttribute("error"); %>
+
 <h1>Person Details</h1>
 
 <%=session.getAttribute("persondetailTable")%>
