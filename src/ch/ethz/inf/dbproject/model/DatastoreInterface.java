@@ -456,11 +456,11 @@ public final class DatastoreInterface {
 		}
 	}
 	
-	public final List<Case> getInvolvedCases(int id){
+	public final List<Case> getConvictions(int id){
 		List<Case> res = new ArrayList<Case>();
 		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd " +
 				"FROM Cases ca, Connected co " +
-				"WHERE ca.CaseNr =  co.CaseID AND PersonID = '" + id + "'";
+				"WHERE ca.CaseNr =  co.CaseID AND PersonID = '" + id + "' AND co.Role = 'perpetrator'";
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);
@@ -777,10 +777,7 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> c15f6aff20cec859732565664d106154c7a056b5
+	
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -803,12 +800,8 @@ public final class DatastoreInterface {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
-
-=======
 	
 	
->>>>>>> c15f6aff20cec859732565664d106154c7a056b5
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -843,7 +836,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
-<<<<<<< HEAD
+	
 	public List<Category> getCategoryByCase(String id) {
 		String query = "SELECT Category.CatName, Category.Parent FROM ContainedIn, Category, Cases WHERE ContainedIn.CaseID = Cases.CaseNr AND ContainedIn.CatName = Category.CatName AND CaseID = " + id;
 		List<Category> res = new ArrayList<Category>();
@@ -865,10 +858,4 @@ public final class DatastoreInterface {
 			return null;
 		}
 	}
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> c15f6aff20cec859732565664d106154c7a056b5
->>>>>>> 632e1718edc486b28056deaf7fda9754a6530bc7
 }

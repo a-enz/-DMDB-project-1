@@ -13,6 +13,7 @@ import ch.ethz.inf.dbproject.model.DatastoreInterface;
 import ch.ethz.inf.dbproject.model.Case;
 import ch.ethz.inf.dbproject.model.Person;
 import ch.ethz.inf.dbproject.util.html.BeanTableHelper;
+import ch.ethz.inf.dbproject.util.html.MessageHelper;
 
 /**
  * Servlet implementation class of Case list page
@@ -22,7 +23,7 @@ public final class PersonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final DatastoreInterface dbInterface = new DatastoreInterface();
-	
+	private final MessageHelper mh = new MessageHelper();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -97,6 +98,7 @@ public final class PersonServlet extends HttpServlet {
 				deletedPerson.addObject(person);
 				session.setAttribute("deletedPerson", deletedPerson);
 				dbInterface.deletePerson(request.getParameter("id"));
+				mh.SuccessMessage("The Following Person was successfully deleted:");
 			}
 		}
 		if (filter == null ) {
@@ -111,6 +113,8 @@ public final class PersonServlet extends HttpServlet {
 		else {
 			throw new RuntimeException("Code should not be reachable!");
 		}
+		
+		session.setAttribute("error", mh.toString());
 
 		// Finally, proceed to the Projects.jsp page which will render the Projects
 		this.getServletContext().getRequestDispatcher("/Person.jsp").forward(request, response);

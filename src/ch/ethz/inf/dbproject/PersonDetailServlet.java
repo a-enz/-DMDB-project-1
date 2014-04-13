@@ -141,10 +141,12 @@ public final class PersonDetailServlet extends HttpServlet {
 			else
 			{
 				notetable.addBeanColumn("Note", "Text");
-				notetable.addLinkColumn("",
-						"Remove Note",
-						"PersonDetail?id="+ id +"&action=remove_note&notenr=",
-						"NoteNr");
+					if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+					notetable.addLinkColumn("",
+							"Remove Note",
+							"PersonDetail?id="+ id +"&action=remove_note&notenr=",
+							"NoteNr");
+				}
 			}
 			
 			notetable.addObjects(this.dbInterface.getPersonNoteById(id));
@@ -166,7 +168,7 @@ public final class PersonDetailServlet extends HttpServlet {
 			casetable.addBeanColumn("Title", "Title");
 			casetable.addBeanColumn("Date", "Date");
 			casetable.addBeanColumn("Location", "Location");
-			casetable.addBeanColumn("Status", "Status");
+			//casetable.addBeanColumn("Status", "Status");
 			casetable.addBeanColumn("Conviction Date", "DateCon");
 			casetable.addBeanColumn("DateEnd", "DateEnd");
 			
@@ -175,12 +177,13 @@ public final class PersonDetailServlet extends HttpServlet {
 					"Case?id=", 
 					"CaseNr");
 		
-			casetable.addObjects(this.dbInterface.getInvolvedCases(id));
+			casetable.addObjects(this.dbInterface.getConvictions(id));
 			
 			session.setAttribute("involvedCasesTable", casetable);
 			
 			//-------------- print all error messages--------------
 			session.setAttribute("error", mh.toString());
+			mh.removeAll();
 			
 			
 		} catch (final Exception ex) {

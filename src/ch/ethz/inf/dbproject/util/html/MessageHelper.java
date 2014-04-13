@@ -16,6 +16,10 @@ public class MessageHelper extends HtmlHelperIface {
 		String message = "<div id=\"successmessage\">" + Text + "</div><br/>";
 		HtmlMessages.add(message);
 	}
+
+	public void removeAll(){
+		HtmlMessages.clear();
+	}
 	
 	
 	@Override
