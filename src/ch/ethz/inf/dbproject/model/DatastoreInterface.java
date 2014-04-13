@@ -285,7 +285,7 @@ public final class DatastoreInterface {
 	public final List<Case> getClosedCases(){
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'close'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'closed'");
 			final List <Case> cases = new ArrayList<Case>();
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
