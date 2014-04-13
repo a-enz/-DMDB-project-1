@@ -108,7 +108,7 @@ public final class DatastoreInterface {
 			sqlStatement.executeUpdate("UPDATE Cases SET Status='" + status + "' WHERE CaseNr=" + id);
 
 			
-			if (status.equals("close")){
+			if (status.equals("closed")){
 				sqlStatement.executeUpdate("UPDATE Connected SET Role = 'perpetrator' WHERE CaseID = " + id + " AND Role = 'suspect'");
 			}
 			else if (status.equals("open")){
@@ -285,7 +285,7 @@ public final class DatastoreInterface {
 	public final List<Case> getClosedCases(){
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'close'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Status = 'closed'");
 			final List <Case> cases = new ArrayList<Case>();
 			while (rs.next()){
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
@@ -556,6 +556,47 @@ public final class DatastoreInterface {
 		} catch (SQLException e){
 			e.printStackTrace();
 			return true;
+		}
+	}
+	
+	public final int countOpenCases(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS openCount FROM Cases WHERE Status = 'open'");
+			System.out.println("success");
+			rs.last();
+			return rs.getInt("openCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("shit");
+			return 0;
+		}
+	}
+	
+	public final int countClosedCases(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS closedCount FROM Cases WHERE Status = 'closed'");
+			rs.last();
+			return rs.getInt("closedCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public final int countPerpetrators(){
+		try{
+			final Statement stmt = sqlConnection.createStatement();
+			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS pCount FROM Person p, Connected c WHERE p.PersonID = c.PersonID AND c.Role = 'perpetrator'");
+			rs.last();
+			return rs.getInt("pCount");
+				
+		} catch(SQLException e){
+			e.printStackTrace();
+			return 0;
 		}
 	}
 
