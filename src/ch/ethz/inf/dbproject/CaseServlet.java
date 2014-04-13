@@ -127,12 +127,22 @@ public final class CaseServlet extends HttpServlet {
 				
 			}
 			
+			else if (action !=null && action.equals("save_note")){
+				System.out.println("save note");
+				mh.SuccessMessage("change in Case Notes saved");
+				String[] NoteNrs = request.getParameterValues("notenr");
+				String[] Texts = request.getParameterValues("note");
+				for (int i = 0; i<NoteNrs.length; i++){
+					dbInterface.updateCaseNote(NoteNrs[i], Texts[i]);//TODO implement this!!!!
+				}
+			}
 			
 			//---------------- Create Case Table -----------------
 			
 			/*******************************************************
 			 * Construct a table to present all properties of a case
 			 *******************************************************/
+			
 			final BeanTableHelper<Case> table = new BeanTableHelper<Case>(
 					"cases" 		/* The table html id property */,
 					"table" /* The table html class property */,
@@ -191,12 +201,21 @@ public final class CaseServlet extends HttpServlet {
 					NoteText.class 	/* The class of the objects (rows) that will be displayed */
 			);
 			
+			if (action != null && action.equals("edit_note")){
+				notetable.addTextColumn("", "note", "Text");
+				notetable.addHiddenColumn("","notenr","NoteNr");
+			}
+			else
+			{
 			notetable.addBeanColumn("Text", "Text");
 			notetable.addLinkColumn("",
 					"Remove Note",
 					"Case?id="+ id +"&action=remove_note&notenr=",
 					"NoteNr");
-			//notetable.addLinkColumn("", "Edit Note","Case?id="+ id +"&action=edit_note&notenr=" , "NoteNr");
+			}
+			
+
+			
 			notetable.addObjects(dbInterface.getCaseNoteById(id));
 			session.setAttribute("noteTable", notetable);
 			

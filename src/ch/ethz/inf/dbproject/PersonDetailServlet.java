@@ -20,6 +20,7 @@ import ch.ethz.inf.dbproject.model.DatastoreInterface;
 import ch.ethz.inf.dbproject.model.Person;
 import ch.ethz.inf.dbproject.util.UserManagement;
 import ch.ethz.inf.dbproject.util.html.BeanTableHelper;
+import ch.ethz.inf.dbproject.util.html.MessageHelper;
 
 /**
  * Servlet implementation class of Case Details Page
@@ -29,6 +30,7 @@ public final class PersonDetailServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final DatastoreInterface dbInterface = new DatastoreInterface();
+	private final MessageHelper mh = new MessageHelper();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -114,6 +116,7 @@ public final class PersonDetailServlet extends HttpServlet {
 			}
 			else if (action !=null && action.equals("save_note")){
 				System.out.println("save note");
+				mh.SuccessMessage("change in Person Notes saved");
 				String[] NoteNrs = request.getParameterValues("notenr");
 				String[] Texts = request.getParameterValues("note");
 				for (int i = 0; i<NoteNrs.length; i++){
@@ -175,6 +178,9 @@ public final class PersonDetailServlet extends HttpServlet {
 			casetable.addObjects(this.dbInterface.getInvolvedCases(id));
 			
 			session.setAttribute("involvedCasesTable", casetable);
+			
+			//-------------- print all error messages--------------
+			session.setAttribute("error", mh.toString());
 			
 			
 		} catch (final Exception ex) {

@@ -2,7 +2,6 @@ w<%@page import="ch.ethz.inf.dbproject.model.User"%>
 <%@page import="ch.ethz.inf.dbproject.util.UserManagement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Header.jsp" %>
-<% final User user = (User) session.getAttribute(UserManagement.SESSION_USER); %>
 
 <%=session.getAttribute("error")%>
 <%session.removeAttribute("error");%>
@@ -27,7 +26,7 @@ if (user != null) {
 	
 	<form action="Case" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
-		<input type="hidden" name="action" value="edit_case" />
+		<input type="hidden" name="action" value="edit_case"/>
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
 		<h1>Edit Informations</h1>
 		<br/>
@@ -49,10 +48,44 @@ if (user != null) {
 	</form>
 	
 	
+
 	<h1>Note</h1>
 	
+	
+	<%
+	if (request.getParameter("action") != null && request.getParameter("action").equals("edit_note")){ 
+	%>
+		<form action="Case" method="get">
+	<%
+	}
+	%>
+	
 	<%=session.getAttribute("noteTable")%>
-
+	
+	<%
+	if (request.getParameter("action") != null && request.getParameter("action").equals("edit_note")){ 
+	%>
+			<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
+			<input type="hidden" name="action" value="save_note"/>
+			<input type="submit" value="Save">
+		</form>
+	<%
+	}
+	%>
+	
+	<%
+	if (request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note"))){ 
+	%>
+		<form action="Case" method="get">
+			<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
+			<input type="hidden" name="action" value="edit_note"/>
+			<input type="submit" value="Edit Note">
+		</form>
+	<%
+	}
+	%>
+	
+	
 	<br/>
 	<form action="Case" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
