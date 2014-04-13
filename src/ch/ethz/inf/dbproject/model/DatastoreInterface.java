@@ -208,11 +208,14 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM Cases cas, ContainIn con, Category cat WHERE  "); //TODO: Implement this
+			final ResultSet rs = stmt.executeQuery(	"SELECT cas.* " +
+													"FROM Cases cas, ContainedIn contin " +
+													"WHERE cas.CaseNr = contin.CaseID " +
+													"AND contin.CatName = '" + Category + "'");
 			final List<Case> cases = new ArrayList<Case>(); 
 			while (rs.next()) {
-				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
-			}
+				cases.add(new Case(rs));
+						}
 			
 			rs.close();
 			stmt.close();

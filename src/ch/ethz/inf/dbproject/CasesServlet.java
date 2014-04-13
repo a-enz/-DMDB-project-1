@@ -86,8 +86,7 @@ public final class CasesServlet extends HttpServlet {
 
 		} else if (category != null) {
 
-			// TODO implement this!
-			//table.addObjects(this.dbInterface.getCasesByCategory(category));
+			table.addObjects(this.dbInterface.getCasesByCategory(category));
 			
 		} else if (filter != null) {
 		

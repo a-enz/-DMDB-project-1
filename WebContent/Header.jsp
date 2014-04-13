@@ -64,10 +64,13 @@ final User user = (User) session.getAttribute(UserManagement.SESSION_USER);
 				
 				<li class="list"><a href="#">Categories</a>
 				<ul class="nav-sub">
-					<li><a href="Cases?category=other">Most Recent</a></li>
-					<li><a href="Cases?category=property">Property Crime</a></li>
 					<li><a href="Cases?category=theft">Theft</a></li>
-					<li><a href="Cases?filter=other">Other</a></li>
+					<li><a href="Cases?category=murder">Murder</a></li>
+					<li><a href="Cases?category=exhibitionism">Exhibitionism</a></li>
+					<li><a href="Cases?category=assault">Assault</a></li>
+					<li><a href="Cases?category=kidnapping">Kidnapping</a></li>	
+					<li><a href="Cases?category=blackmailing">Blackmailing</a></li>
+					<li><a href="Cases?category=other">Other</a></li>						
 				</ul>
 				</li>
 			    
