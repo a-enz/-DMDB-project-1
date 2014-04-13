@@ -3,24 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Header.jsp" %>
 
-<%=session.getAttribute("error") %>
-<% session.removeAttribute("error"); %>
 
 <h1>Person Details</h1>
 
 <%=session.getAttribute("persondetailTable")%>
-
-<%
-if ((Boolean) session.getAttribute("edited") == true) {	//client has just edited some entries of this person
-%>
-	Entries edited <br /> 
-<%
-}
-%>
-
-<h1>Involved Cases</h1>
-
-<%=session.getAttribute("involvedCasesTable") %>
 
 <%
 if (user != null) {
@@ -28,11 +14,21 @@ if (user != null) {
 %>
 	<form action="PersonEdit" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
-		<input type="submit" value="Edit"/>
+		<input type="submit" value="Edit Person"/>
+	</form>
+	<form action="Person" method="get">
+		<input type="hidden" name="action" value="delete" />
+		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
+		<input type="submit" value="Delete Person"/>
 	</form>
 <%
 }
 %>
+<h1>Convictions</h1>
+
+<%=session.getAttribute("involvedCasesTable") %>
+
+
 <h1>Notes</h1>
 
 <%
@@ -57,17 +53,18 @@ if (request.getParameter("action") != null && request.getParameter("action").equ
 %>
 
 <%
-if (request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note"))){ 
+if (user != null && (request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note")))){ 
 %>
 	<form action="PersonDetail" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
 		<input type="hidden" name="action" value="edit_note"/>
-		<input type="submit" value="Edit Note">
+		<input type="submit" value="Edit all Notes">
 	</form>
 <%
 }
 %>
-
+<br /> <br />
+<br /> <br />
 <%
 if (user != null) {
 	// User is logged in. He can add a comment
@@ -76,20 +73,13 @@ if (user != null) {
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="add_comment" />
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
-		Add Comment
+		Add new Comment
 		<br />
 		<textarea rows="4" cols="50" name="comment"></textarea>
 		<br />
 		<input type="submit" value="Submit" />
 	</form>
-	
-	<form action="Person" method="get">
-		<input type="hidden" name="action" value="delete" />
-		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
-		<input type="submit" value="Delete Person"/>
-	</form>
 <%
 }
 %>
-
 <%@ include file="Footer.jsp"%>

@@ -53,7 +53,7 @@ public class AddCaseServlet extends HttpServlet{
 		session.setAttribute("cattable", catTable);
 		
 		catTable.addBeanColumn("Name", "CatName");
-		catTable.addBeanColumn("Parent Category", "Parent");
+		//catTable.addBeanColumn("Parent Category", "Parent");
 		catTable.addCheckColumn("Add", "CatName", "check", "CatName");
 		catTable.addObjects(dbInterface.getAllCategories());
 		table.addBeanColumn("Title", "Title");

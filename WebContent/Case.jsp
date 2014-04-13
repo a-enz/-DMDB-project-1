@@ -4,7 +4,9 @@
 <%@ include file="Header.jsp" %>
 
 <%=session.getAttribute("error")%>
+<%=session.getAttribute("cataddsuccess")%>
 <%session.removeAttribute("error");%>
+<%session.removeAttribute("cataddsuccess");%>
 
 <h1>Case Details</h1>
 
@@ -57,8 +59,6 @@ if (user != null) {
 		<input type="hidden" name="action" value="edit_case"/>
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
 		<h1>Edit Informations</h1>
-		Status <br/>
- 		<br/>
 		<br/>
 		Title <br/>
 		<textarea rows="1" cols="50" name="title"></textarea><br/>
@@ -69,7 +69,11 @@ if (user != null) {
 		<input type ="submit" value="Submit" />
 	</form>
 	
+	<h1>Link to Category</h1>
 	
+	<form action="Case" method ="get">
+		<%=session.getAttribute("addcattable")%>
+	</form>
 
 	<h1>Note</h1>
 	
@@ -101,7 +105,7 @@ if (user != null) {
 		<form action="Case" method="get">
 			<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
 			<input type="hidden" name="action" value="edit_note"/>
-			<input type="submit" value="Edit Note">
+			<input type="submit" value="Edit all Notes">
 		</form>
 	<%
 	}
