@@ -66,7 +66,7 @@ public final class UserServlet extends HttpServlet {
 				session.setAttribute(SESSION_USER_LOGGED_IN, true);
 				session.setAttribute(SESSION_USER, user);
 			}
-			else mhlogin.ErrorMessage("Login Failed");
+			else mhlogin.ErrorMessage("You are registered or used the wrong password.");
 			// Retrieve User
 			// Store this user into the session
 			

@@ -43,7 +43,7 @@ public final class CaseServlet extends HttpServlet {
 	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
 		final HttpSession session = request.getSession(true);
-
+		
 		final String idString = request.getParameter("id");
 		
 		if (idString == null) {
@@ -55,6 +55,8 @@ public final class CaseServlet extends HttpServlet {
 			final Integer id = Integer.parseInt(idString);
 			session.setAttribute("id", id);
 
+			session.setAttribute("is_closed", dbInterface.isClosed(id));
+
 			
 			//------------------Edit Informations------------------
 			
@@ -65,7 +67,6 @@ public final class CaseServlet extends HttpServlet {
 				String Title = request.getParameter("title");
 				String Date = request.getParameter("date");
 				String Location = request.getParameter("location");
-				String openclose = request.getParameter("openclose");
 				
 				if (Title != null && Title != ""){
 					System.out.println("Title: " + Title);
@@ -81,12 +82,6 @@ public final class CaseServlet extends HttpServlet {
 					System.out.println("Location: " + Location);
 					dbInterface.updateCaseLocation(id, Location);
 				}
-				
-				if (openclose != null){
-					System.out.println("openclose: " + openclose);
-					dbInterface.updateCaseStatus(id, openclose);
-				}
-				
 			}
 			else if (action!= null && action.equals("remove_note")){
 				System.out.println("Remove CaseNote");
@@ -112,6 +107,15 @@ public final class CaseServlet extends HttpServlet {
 					boolean success = this.dbInterface.removePersonCase(id, personID);
 					if(success) mh.SuccessMessage("Person with ID " + personID + " removed from this case");
 					else mh.ErrorMessage("Failed to remove Person with ID " + personID);				}
+			}
+			
+			else if(action != null && action.equals("edit_state")){
+				final String openclose = request.getParameter("openclose");
+				if (openclose != null){
+					System.out.println("openclose: " + openclose);
+					dbInterface.updateCaseStatus(id, openclose);
+					session.setAttribute("is_closed", dbInterface.isClosed(id));
+				}
 			}
 			
 			
