@@ -233,12 +233,18 @@ public final class CaseServlet extends HttpServlet {
 			persontable.addBeanColumn("Reason", "Reason");
 			persontable.addBeanColumn("Role", "Role");
 			
+			persontable.addLinkColumn("", "View Person",
+					"PersonDetail?id=",
+					"PersonID");
+
 			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
 				
 				persontable.addLinkColumn("", "remove person",
 										"Case?id=" + id + "&action=remove_person&personid=",
 										"PersonID");
 			}
+
+				
 
 			persontable.addObjects(dbInterface.GetCasePersonById(id));
 			session.setAttribute("personTable", persontable);

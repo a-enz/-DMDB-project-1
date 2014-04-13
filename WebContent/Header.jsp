@@ -73,9 +73,20 @@ final User user = (User) session.getAttribute(UserManagement.SESSION_USER);
 					<li><a href="Cases?category=other">Other</a></li>						
 				</ul>
 				</li>
-			    
-			    <li><a href="Search">Search</a></li>
-			    <li><a href="User">User/Login</a></li>
+				
+				<li><a href="Search">Search</a></li>
+				
+			    <%
+			    if (user == null){
+		    	%>
+		    		<li><a href="User">User/Login</a></li>
+		    	<%
+			    }else{
+			    %>
+					<li><a href="User"><%=user.getName()%>/Logout</a></li>
+				<%
+				}
+				%>
 			    
 			    
 			    
