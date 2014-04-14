@@ -187,7 +187,7 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM Cases");
+			final ResultSet rs = stmt.executeQuery("Select * FROM Cases LIMIT 0, 100");
 			final List<Case> cases = new ArrayList<Case>(); 
 			while (rs.next()) {
 				cases.add(new Case(rs.getInt("CaseNr"), rs.getString("Title"), rs.getDate("Date"), rs.getString("Location"), rs.getString("Status"), rs.getDate("DateCon"), rs.getDate("DateEnd")));
@@ -234,7 +234,7 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM Person");
+			final ResultSet rs = stmt.executeQuery("Select * FROM Person LIMIT 0, 100");
 			final List<Person> people = new ArrayList<Person>(); 
 			while (rs.next()) {
 				people.add(new Person(rs.getInt("PersonID"), rs.getString("FirstName"), rs.getString("SurName"), rs.getString("Street"), rs.getDate("BirthDate"), rs.getString("Nationality"), rs.getInt("Bounty")));
@@ -402,7 +402,7 @@ public final class DatastoreInterface {
 		try {
 			
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("Select * FROM PersonNote");
+			final ResultSet rs = stmt.executeQuery("Select * FROM PersonNote LIMIT 0, 100");
 			final List<PersonNote> note = new ArrayList<PersonNote>(); 
 			while (rs.next()) {
 				note.add(new PersonNote(rs.getInt("NoteNr"), rs.getInt("PersonID"), rs.getString("Username"), rs.getString("Text")));
