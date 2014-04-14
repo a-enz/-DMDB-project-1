@@ -482,6 +482,7 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
+	
 	public final User getUser(String username, String passwort) {
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -607,7 +608,7 @@ public final class DatastoreInterface {
 		List<Case> res = new ArrayList<Case>();
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title like '" + name + "'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title like '%" + name + "%'");
 			while (rs.next()) {
 				res.add(new Case(rs));
 			}
@@ -621,7 +622,7 @@ public final class DatastoreInterface {
 
 	public List<Case> searchByCategory(String category) {
 		List<Case> res = new ArrayList<Case>();
-		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName like '" + category + "'";
+		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName like '%" + category + "%'";
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);
@@ -640,11 +641,11 @@ public final class DatastoreInterface {
 	 * SEARCHES IN PERSON:
 	 ************************/
 	
-	public List<Person> searchPersonByName(String name) {
+	public List<Person> searchPersonByName(String first, String second) {
 		List<Person> res = new ArrayList<Person>();
 		String query = "SELECT p.PersonID, p.FirstName, p.SurName, p.Street, p.BirthDate, p.Nationality, p.Bounty " +
 				"FROM Person p " +
-				"WHERE p.FirstName like '" + name + "' OR p.SurName like '" +name + "'";
+				"WHERE p.FirstName like '" + first + "' AND p.SurName like '" +second + "' OR p.FirstName like '" + second + "' AND p.SurName like '" + first + "%'";
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);

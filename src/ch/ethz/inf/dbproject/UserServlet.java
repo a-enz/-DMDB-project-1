@@ -66,7 +66,7 @@ public final class UserServlet extends HttpServlet {
 				session.setAttribute(SESSION_USER_LOGGED_IN, true);
 				session.setAttribute(SESSION_USER, user);
 			}
-			else mhlogin.ErrorMessage("You are registered or used the wrong password.");
+			else mhlogin.ErrorMessage("You are not registered or used the wrong password.");
 			// Retrieve User
 			// Store this user into the session
 			
@@ -115,7 +115,7 @@ public final class UserServlet extends HttpServlet {
 			session.setAttribute(SESSION_USER_LOGGED_IN, false);
 		} else {
 			// Logged in
-			final BeanTableHelper<User> userDetails = new BeanTableHelper<User>("userDetails", "userDetails", User.class);
+			final BeanTableHelper<User> userDetails = new BeanTableHelper<User>("userDetails", "table", User.class);
 			userDetails.addBeanColumn("Username", "username");
 			userDetails.addBeanColumn("Name", "name");
 			userDetails.setVertical(true);

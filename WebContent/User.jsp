@@ -9,10 +9,9 @@ if ((Boolean) session.getAttribute(UserServlet.SESSION_USER_LOGGED_IN)) {
 	// User is logged in. Display the details:
 %>
 	
-<%= session.getAttribute(UserServlet.SESSION_USER_DETAILS) %>
+<font size="3"> <%= session.getAttribute(UserServlet.SESSION_USER_DETAILS) %></font>
 
-<h1>Logout</h1>
-	
+
 	<form action="User" method="get">
 	<input type="hidden" name="action" value="logout" />
 	<table>

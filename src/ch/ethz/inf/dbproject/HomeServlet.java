@@ -1,6 +1,7 @@
 package ch.ethz.inf.dbproject;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,11 +36,19 @@ public final class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final HttpSession session = request.getSession(true);
-
-	    session.setAttribute("openCasesCount", this.dbInterface.countOpenCases());
-	    session.setAttribute("closedCasesCount", this.dbInterface.countClosedCases());
-	    session.setAttribute("perpetratorCount", this.dbInterface.countPerpetrators());
-	    
+		
+		try{
+		    session.setAttribute("openCasesCount", this.dbInterface.countOpenCases());
+		    session.setAttribute("closedCasesCount", this.dbInterface.countClosedCases());
+		    session.setAttribute("perpetratorCount", this.dbInterface.countPerpetrators());
+		    
+		    //session.setAttribute("recentConvicts",this.dbInterface);
+		    
+		}catch(Exception e){
+			e.getStackTrace();
+			this.getServletContext().getRequestDispatcher("/Home.jsp").forward(request, response);
+		}
+		
         this.getServletContext().getRequestDispatcher("/Home.jsp").forward(request, response);	  
 	}
 }

@@ -33,5 +33,11 @@ there are currently <%=session.getAttribute("closedCasesCount") %> closed cases 
 <br /><br />
 
 Total Convictions: <%=session.getAttribute("perpetratorCount") %>
+
+<br><br/>
+
+<%-- Most recent convictions:
+
+<%=session.getAttribute("recentConvicts")%> --%>
 </font>
 <%@ include file="Footer.jsp" %>
