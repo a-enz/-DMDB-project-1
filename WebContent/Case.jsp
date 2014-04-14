@@ -16,7 +16,7 @@
 
 <%=session.getAttribute("cattable")%>
 
-<h1>Person</h1>
+<h1>Involved Persons</h1>
 
 <%=session.getAttribute("personTable")%>
 
@@ -30,7 +30,7 @@ if (user != null) {
 	<form action="CaseAddPerson" method="get">
 		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="add_person" />
-		<input type="submit" value="Add Person" />
+		<input type="submit" value="Add more Persons" />
 	</form>
 	<%
 	}
@@ -38,7 +38,8 @@ if (user != null) {
 	<form action="Case" method="get">		
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="edit_state"/>
-		
+	<br/>
+	<br/>
 	<h1>Change Status to:</h1>
    	<%
    	if((Boolean) session.getAttribute("is_closed") == true){%>	
@@ -51,6 +52,10 @@ if (user != null) {
 	} 
 	%>
 	</form>
+	<br/>
+	<br/>
+	<hr/>
+	<hr/>
 
    	<%
    	if((Boolean) session.getAttribute("is_closed") == false){%>	 	
@@ -58,17 +63,16 @@ if (user != null) {
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="edit_case"/>
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
-		<h1>Edit Informations</h1>
-		<br/>
+		<h1>Edit Case Informations</h1>
 		Title <br/>
 		<textarea rows="1" cols="50" name="title"></textarea><br/>
 		Date <br/>
 		<input type="date" name="date"></input><br/>
 		Location <br/>
 		<textarea rows="1" cols="50" name="location"></textarea><br/>
-		<input type ="submit" value="Submit" />
+		<input type ="submit" value="Submit Changes" />
 	</form>
-	
+	<br/>
 	<h1>Link to Category</h1>
 	
 	<form action="Case" method ="get">
@@ -111,14 +115,13 @@ if (user != null) {
 	}
 	%>
 	
-	
+	<br/>
 	<br/>
 	<form action="Case" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="add_comment" />
 		<input type="hidden" name="username" value="<%= user.getUsername() %>" />
 		<h1>Add Note</h1>
-		<br />
 		<textarea rows="4" cols="50" name="comment"></textarea>
 		<br />
 		<input type="submit" value="Submit" />

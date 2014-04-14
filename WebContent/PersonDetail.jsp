@@ -24,11 +24,18 @@ if (user != null) {
 <%
 }
 %>
+<br/>
 <h1>Convictions</h1>
-
 <%=session.getAttribute("involvedCasesTable") %>
 
-
+<%
+if (user != null) {
+	// User is logged in. He can add a comment
+%>
+<br/>
+<br/>
+<hr/>
+<hr/>
 <h1>Notes</h1>
 
 <%
@@ -53,7 +60,7 @@ if (request.getParameter("action") != null && request.getParameter("action").equ
 %>
 
 <%
-if (user != null && (request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note")))){ 
+if ((request.getParameter("action") == null || !(request.getParameter("action").equals("edit_note")))){ 
 %>
 	<form action="PersonDetail" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>"/>
@@ -63,18 +70,13 @@ if (user != null && (request.getParameter("action") == null || !(request.getPara
 <%
 }
 %>
-<br /> <br />
-<br /> <br />
-<%
-if (user != null) {
-	// User is logged in. He can add a comment
-%>
+<br /> 
+<br />
 	<form action="PersonDetail" method="get">
 		<input type="hidden" name="id" value ="<%=session.getAttribute("id")%>" />
 		<input type="hidden" name="action" value="add_comment" />
 		<input type="hidden" name="user_name" value="<%= user.getUsername() %>" />
-		Add new Comment
-		<br />
+		<h1>Add Note</h1>
 		<textarea rows="4" cols="50" name="comment"></textarea>
 		<br />
 		<input type="submit" value="Submit" />

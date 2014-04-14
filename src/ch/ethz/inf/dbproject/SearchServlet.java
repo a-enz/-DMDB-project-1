@@ -114,8 +114,22 @@ public final class SearchServlet extends HttpServlet {
 			} else if (filter.equals("personname")) {
 				
 				final String personname = request.getParameter("personname");
-				persontable.addObjects(this.dbInterface.searchPersonByName(personname));	
+				String[] splitted = personname.split(" ");
+				String firstarg = "";
+				String secondarg = "";
 				
+				if(splitted != null && splitted.length > 1){
+					firstarg = splitted[0];
+					secondarg = splitted[1];
+				}
+				else if(splitted != null && splitted.length == 1){
+					firstarg = splitted[0];
+					secondarg = "%";
+				}
+				
+				
+				
+				persontable.addObjects(this.dbInterface.searchPersonByName(firstarg, secondarg));	
 				session.setAttribute("results", persontable);
 			}		
 		}
