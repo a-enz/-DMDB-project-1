@@ -125,13 +125,13 @@ public final class DatastoreInterface {
 	public final void addPersonToCase(final int id, final String personid, final String reason){
 		try{
 			final Statement sqlStatement = sqlConnection.createStatement();
-			sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role) VALUES (" + id + "," + personid + ", 'perpetrates')");
+			sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role) VALUES (" + id + "," + personid + ", 'suspect')");
 			
 			ResultSet rs = sqlStatement.executeQuery("SELECT * FROM Connected WHERE CaseID = "+ id +" AND PersonID = " + personid);
 			if(rs.next()){
 				sqlStatement.executeUpdate("UPDATE Connected SET Reason = '" + reason + "' WHERE CaseID = " + id + " AND PersonID = " + personid);
 			}else{
-				sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role, Reason) VALUES (" + id + "," + personid + ", 'suspects', '" + reason + "')");
+				sqlStatement.executeUpdate("INSERT INTO Connected (CaseID, PersonID, Role, Reason) VALUES (" + id + "," + personid + ", 'suspect', '" + reason + "')");
 			}
 			
 			sqlStatement.close();
