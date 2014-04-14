@@ -74,6 +74,7 @@ public final class PersonDetailServlet extends HttpServlet {
 							request.getParameter("nationality"), 
 							request.getParameter("bounty"));
 					//System.out.print("Succesfully edited: " + succ);
+					mh.SuccessMessage("Person successfully edited!");
 				}
 				session.setAttribute("edited", true);
 			}
@@ -108,6 +109,7 @@ public final class PersonDetailServlet extends HttpServlet {
 			if (action != null && action.equals("add_comment")){
 				System.out.println("Insert a comment");
 				dbInterface.insertPersonNote(id, username, text);
+				mh.SuccessMessage("Successfully add a note");
 			}
 			else if (action !=null && action.equals("remove_note")){
 				System.out.println("remove a comment");
