@@ -58,7 +58,7 @@ public class Translator {
 
 	
 	//read a whole table into SQLFile
-	public SQLFile readSQLTable(String table){
+	private SQLFile readSQLTable(String table){
 		//set filename:
 		SQLFile sqlFile = new SQLFile(table);
 		

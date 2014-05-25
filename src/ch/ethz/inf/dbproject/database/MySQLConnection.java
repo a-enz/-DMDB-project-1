@@ -77,7 +77,7 @@ public final class MySQLConnection {
 							"PersonNote",
 							"User"}
 		;
-		String saveInDist = "/home/mlei/workspace/database/";
+		String saveInDist = "/home/andi/Documents/DMDB/";
 		
 		String extension = ".txt";
 		

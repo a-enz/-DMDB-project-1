@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class MyDBStructure {
 	
 	public static final int blocksize = 1024;
-	
+	public static final char separator = ',';
 	public static final char[] filler= {(byte) 0x1b};
 	
 //	public String escSequence(int length){
@@ -31,7 +31,7 @@ public abstract class MyDBStructure {
 			
 			loopCount++;
 			if(loopCount < values.size()){
-				dest[byteCount] = ','; //do we need to remove the comma at the end of all or do we not mind?
+				dest[byteCount] = separator; //do we need to remove the comma at the end of all or do we not mind?
 				byteCount++;
 			}
 		}
