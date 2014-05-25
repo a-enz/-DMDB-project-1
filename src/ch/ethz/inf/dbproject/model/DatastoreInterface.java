@@ -16,10 +16,6 @@ public final class DatastoreInterface {
 	//@SuppressWarnings("unused")
 	private Connection sqlConnection;
 
-
-	public DatastoreInterface() {
-		this.sqlConnection = MySQLConnection.getInstance().getConnection();
-	}
 	
 	public final Person getPersonById(final int id) {
 		
@@ -212,7 +208,7 @@ public final class DatastoreInterface {
 													"FROM Cases cas, ContainedIn contin " +
 													"WHERE cas.CaseNr = contin.CaseID " +
 													"AND contin.CatName = '" + Category + "'");
-			final List<Case> cases = new ArrayList<Case>(); 
+			final List<Case> cases = new ArrayList<Case>();
 			while (rs.next()) {
 				cases.add(new Case(rs));
 						}
