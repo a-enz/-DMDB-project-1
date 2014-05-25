@@ -43,6 +43,7 @@ public final class MySQLConnection {
 
 	private MySQLConnection() {
 		Connection connection = null;
+		System.out.println("fuck");
 		try {
 			new Driver();
 			connection = DriverManager.getConnection("jdbc:mysql://" + HOSTNAME	+ ":" + PORT + "/" + DATABASE, USERNAME, PASSWORD);
@@ -59,6 +60,7 @@ public final class MySQLConnection {
 		this.connection = connection;
 		
 		//---------generate byte files--------
+		System.out.println("starting test");
 		Test(connection);
 		//---------------------------------
 	}

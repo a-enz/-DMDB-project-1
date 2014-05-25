@@ -16,6 +16,9 @@ public final class DatastoreInterface {
 	//@SuppressWarnings("unused")
 	private Connection sqlConnection;
 
+	public DatastoreInterface(){
+		this.sqlConnection = MySQLConnection.getInstance().getConnection();
+	}
 	
 	public final Person getPersonById(final int id) {
 		

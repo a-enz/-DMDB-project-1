@@ -1,6 +1,8 @@
 package ch.ethz.inf.dbproject.translator;
 
 import java.sql.*; 
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.ethz.inf.dbproject.database.MySQLConnection;
 import java.io.*;
@@ -51,8 +53,17 @@ public class Translator {
 		
 		try {
 			Statement stmt = sqlConnection.createStatement();
-			stmt.executeQuery("SELECT * " +
-				      		   "FROM " + table);
+			ResultSet res = stmt.executeQuery("SELECT * " +
+				      		   				  "FROM " + table);
+			
+			ResultSetMetaData metaRes = res.getMetaData();
+			System.out.println("reading metadata");
+			List<Column> columnMeta = readMetaData(metaRes);
+			
+			sqlFile.setMetaData(columnMeta);
+			
+			
+			
 			
 			return null;
 			
@@ -63,4 +74,23 @@ public class Translator {
 		}
 	}
 	
+	private List<Column> readMetaData(ResultSetMetaData res){
+		try{
+			int columnCount = res.getColumnCount();
+			List<Column> metaData = new ArrayList<Column>();
+			
+			for(int i = 1; i < columnCount; i++){
+				String name = res.getColumnName(i);
+				int size = res.getColumnDisplaySize(i);
+				int typeCode = res.getColumnType(i);
+				
+				metaData.add(new Column(name, size, typeCode));
+				System.out.println(name  + " " + size + " " + typeCode);
+			}
+			return metaData;
+		} catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
