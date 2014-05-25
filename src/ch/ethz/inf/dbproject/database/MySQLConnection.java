@@ -43,7 +43,6 @@ public final class MySQLConnection {
 
 	private MySQLConnection() {
 		Connection connection = null;
-		System.out.println("fuck");
 		try {
 			new Driver();
 			connection = DriverManager.getConnection("jdbc:mysql://" + HOSTNAME	+ ":" + PORT + "/" + DATABASE, USERNAME, PASSWORD);
@@ -60,7 +59,6 @@ public final class MySQLConnection {
 		this.connection = connection;
 		
 		//---------generate byte files--------
-		System.out.println("starting test");
 		Test(connection);
 		//---------------------------------
 	}
@@ -70,7 +68,15 @@ public final class MySQLConnection {
 	}
 	
 	public final void Test(Connection sqlConnection){
-		String[] tables = {"Person"};
+		String[] tables = {"CaseNote",
+							"Cases",
+							"Category",
+							"Connected",
+							"ContainedIn",
+							"Person",
+							"PersonNote",
+							"User"}
+		;
 		String saveInDist = "/home/andi/Documents/DMDB/";
 		
 		String extension = ".txt";

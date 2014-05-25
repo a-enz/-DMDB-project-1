@@ -4,22 +4,28 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MyDBFile {
+public class MyDBFile extends MyDBStructure {
 	private String filename;
 	private MyDBFileHeader header;
 	private List<MyDBFileTuple> tuples;
 	
-	public MyDBFile(ResultSet set){
+	public MyDBFile(SQLFile file){
+		this.filename = file.getName();
+		this.header = new MyDBFileHeader(file.getMetaData());
+		List<MyDBFileTuple> tpls = new ArrayList<MyDBFileTuple>();
 		
-		try{
-		    System.out.println(set.getMetaData());
-		} catch (SQLException e) {
-			
+		for(SQLTuple t : file.getPayLoad()){
+			tpls.add(new MyDBFileTuple(t));
 		}
+		
+		this.tuples = tpls;
 	}
 	
-	public void setFileName(String name){
-		filename = name;
+	public String toString(){
+		String res = header.toString();
+		for(MyDBFileTuple t : tuples){
+			res += t.toString();
+		}
+		return res;
 	}
-
 }
