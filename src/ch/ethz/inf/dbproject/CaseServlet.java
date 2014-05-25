@@ -155,10 +155,11 @@ public final class CaseServlet extends HttpServlet {
 			);
 			
 			catAddTable.addBeanColumn("Category Name", "CatName");
+			if (!dbInterface.isClosed(id)){
 			catAddTable.addLinkColumn("", "add Category",
 									"Case?id=" + id + "&action=addcat&addcat=",
 									"CatName");
-			
+			}
 			if(action != null && action.equals("addcat") && catName != null) {	//add case
 				mh.SuccessMessage("Category successfully added");
 				if(dbInterface.addCatToCase(idString, catName)) session.setAttribute("cataddsuccess", mh.toString());
@@ -207,7 +208,7 @@ public final class CaseServlet extends HttpServlet {
 			
 			catTable.addBeanColumn("Category Name", "CatName");
 			
-			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+			if(UserManagement.getCurrentlyLoggedInUser(session) != null && !dbInterface.isClosed(id)){
 				
 				catTable.addLinkColumn("", "remove Category",
 										"Case?id=" + id + "&action=removecat&removecat=",
@@ -237,7 +238,7 @@ public final class CaseServlet extends HttpServlet {
 					"PersonDetail?id=",
 					"PersonID");
 
-			if(UserManagement.getCurrentlyLoggedInUser(session) != null){
+			if(UserManagement.getCurrentlyLoggedInUser(session) != null && !dbInterface.isClosed(id)){
 				
 				persontable.addLinkColumn("", "remove person",
 										"Case?id=" + id + "&action=remove_person&personid=",
