@@ -608,7 +608,7 @@ public final class DatastoreInterface {
 		List<Case> res = new ArrayList<Case>();
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
-			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title like '%" + name + "%'");
+			final ResultSet rs = stmt.executeQuery("SELECT * FROM Cases WHERE Title = '" + name + "'");
 			while (rs.next()) {
 				res.add(new Case(rs));
 			}
@@ -622,7 +622,7 @@ public final class DatastoreInterface {
 
 	public List<Case> searchByCategory(String category) {
 		List<Case> res = new ArrayList<Case>();
-		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName like '%" + category + "%'";
+		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName = '" + category + "'";
 		try {
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);
@@ -645,7 +645,7 @@ public final class DatastoreInterface {
 		List<Person> res = new ArrayList<Person>();
 		String query = "SELECT p.PersonID, p.FirstName, p.SurName, p.Street, p.BirthDate, p.Nationality, p.Bounty " +
 				"FROM Person p " +
-				"WHERE p.FirstName like '" + first + "' AND p.SurName like '" +second + "' OR p.FirstName like '" + second + "' AND p.SurName like '" + first + "%'";
+				"WHERE p.FirstName = '" + first + "' AND p.SurName = '" +second + "' OR p.FirstName = '" + second + "' AND p.SurName = '" + first + "'";
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
 			final ResultSet rs = stmt.executeQuery(query);
@@ -826,12 +826,11 @@ public final class DatastoreInterface {
 
 		try {
 			stmt = this.sqlConnection.createStatement();
-			stmt.addBatch(insert + values);
+			stmt.executeUpdate(insert + values);
 			for(int i = 0; i < cats.length; i++) {
-				stmt.addBatch("INSERT INTO ContainedIn (CaseID, CatName) VALUES(LAST_INSERT_ID(), '" + cats[i] + "')");
+				stmt.executeUpdate("INSERT INTO ContainedIn (CaseID, CatName) VALUES(LAST_INSERT_ID(), '" + cats[i] + "')");
 			}
 			//System.out.println(cats.length);
-			stmt.executeBatch();
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
