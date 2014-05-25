@@ -7,6 +7,7 @@ public abstract class MyDBStructure {
 	
 	public static final int blocksize = 1024;
 	
+	public static final char[] filler= {(byte) 0x1b};
 	
 //	public String escSequence(int length){
 //		String seq = "\\";
@@ -33,7 +34,7 @@ public abstract class MyDBStructure {
 		
 		//now we fill the rest with escape characters
 		for(int i = byteCount; i < blocksize; i++){
-			dest[byteCount] = '\\';
+			dest[byteCount] = filler[0];
 			byteCount++;
 		}
 	}
