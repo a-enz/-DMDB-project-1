@@ -68,7 +68,15 @@ public final class MySQLConnection {
 	}
 	
 	public final void Test(Connection sqlConnection){
-		String[] tables = {"Person"};
+		String[] tables = {"CaseNote",
+							"Cases",
+							"Category",
+							"Connected",
+							"ContainedIn",
+							"Person",
+							"PersonNote",
+							"User"}
+		;
 		String saveInDist = "/home/andi/Documents/DMDB/";
 		
 		String extension = ".txt";

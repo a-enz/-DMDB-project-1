@@ -14,5 +14,13 @@ public class SQLColumn {
 	public String getColumnName(){
 		return this.name;
 	}
+	
+	public int getSize(){
+		return this.size;
+	}
+	
+	public int getTypeCode(){
+		return this.typeCode;
+	}
 
 }

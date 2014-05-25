@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLTuple {
-	List<String> values;
+	private List<String> values;
 	
 	public SQLTuple(){
 		this.values = new ArrayList<String>();
@@ -12,6 +12,10 @@ public class SQLTuple {
 	
 	public void addValue(String val){
 		values.add(val);
+	}
+	
+	public List<String> getValues(){
+		return this.values;
 	}
 
 }

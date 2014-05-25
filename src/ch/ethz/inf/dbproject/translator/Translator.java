@@ -24,12 +24,19 @@ public class Translator {
 	
 	public void translate(){
 		SQLFile sqlFile;
+		MyDBFile myDBFile;
 		
 		//do for all tables
 		for(String table : tables){
 			
+			//read SQL file infos into prepared class
 			sqlFile = readSQLTable(table);
 			
+			//translate SQLFile to our file specifics
+			myDBFile = new MyDBFile(sqlFile);
+			
+			//write our file to a textfile
+			//prepare filewriter
 			String f = filePath + table + ext;
 			File file = new File(f);
 			
@@ -37,7 +44,10 @@ public class Translator {
 				if(file.exists()) file.delete();
 				
 				PrintWriter out = new PrintWriter(new FileWriter(f,true));
-				//translate stuff
+				//write stuff to file
+				
+				writeFile(myDBFile, out);
+				
 				out.close();
 				
 			} catch (IOException e){
@@ -115,4 +125,7 @@ public class Translator {
 		}
 	}
 	
+	private void writeFile(MyDBFile file, PrintWriter out){
+		out.println(file.toString());
+	}
 }

@@ -27,4 +27,13 @@ public class SQLFile {
 	public List<SQLColumn> getMetaData(){
 		return this.metaData;
 	}
+	
+	public String getName(){
+		return this.filename;
+	}
+	
+	public List<SQLTuple> getPayLoad(){
+		return this.payLoad;
+	}
+	
 }
