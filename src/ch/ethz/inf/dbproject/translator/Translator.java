@@ -57,7 +57,7 @@ public class Translator {
 				      		   				  "FROM " + table);
 			
 			ResultSetMetaData metaRes = res.getMetaData();
-			System.out.println("reading metadata");
+			
 			List<Column> columnMeta = readMetaData(metaRes);
 			
 			sqlFile.setMetaData(columnMeta);
@@ -93,4 +93,5 @@ public class Translator {
 			return null;
 		}
 	}
+	
 }
