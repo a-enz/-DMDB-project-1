@@ -90,7 +90,7 @@ public class Translator {
 			int columnCount = res.getColumnCount();
 			List<SQLColumn> metaData = new ArrayList<SQLColumn>();
 			
-			for(int i = 1; i < columnCount; i++){
+			for(int i = 1; i <= columnCount; i++){
 				String name = res.getColumnName(i);
 				int size = res.getColumnDisplaySize(i);
 				int typeCode = res.getColumnType(i);

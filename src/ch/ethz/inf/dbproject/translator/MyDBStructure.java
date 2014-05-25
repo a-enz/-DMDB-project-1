@@ -17,6 +17,7 @@ public abstract class MyDBStructure {
 	
 	public void writeBlock(List<String> values, char[] dest){
 		int byteCount = 0;
+		int loopCount = 0;
 		
 		//we hope 'values' doesn't contain more than 1024bytes of data
 		for(String s : values){
@@ -28,8 +29,11 @@ public abstract class MyDBStructure {
 				byteCount++;
 			}
 			
-			dest[byteCount] = ','; //do we need to remove the comma at the end of all or do we not mind?
-			byteCount++;
+			loopCount++;
+			if(loopCount < values.size()){
+				dest[byteCount] = ','; //do we need to remove the comma at the end of all or do we not mind?
+				byteCount++;
+			}
 		}
 		
 		//now we fill the rest with escape characters
