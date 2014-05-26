@@ -14,6 +14,7 @@ public class Translator {
 	private String[] tables;
 	private final String filePath;
 	private final String ext;
+	private static final String nullString = "UNKNOWN";
 	
 	public Translator(Connection c, String[] t, String path, String ext){
 		sqlConnection = c;
@@ -116,7 +117,7 @@ public class Translator {
 				//read all columns of a tuple
 				for(SQLColumn c : file.getMetaData()){
 					String val = res.getString(c.getColumnName());
-					if(val == null) val = "UNKNOWN";
+					if(val == null) val = nullString;
 					tuple.addValue(val);
 				}
 				
