@@ -37,7 +37,7 @@ public class Translator {
 			
 			//write our file to a textfile
 			//prepare filewriter
-			String f = filePath + table + ext;
+			String f = filePath + table.toLowerCase() + ext;
 			File file = new File(f);
 			
 			try{
