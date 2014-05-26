@@ -8,14 +8,22 @@ public class MyDBFile extends MyDBStructure {
 	private String filename;
 	private MyDBFileHeader header;
 	private List<MyDBFileTuple> tuples;
+	private List<Integer> tupleValueSizes;
 	
 	public MyDBFile(SQLFile file){
 		this.filename = file.getName();
 		this.header = new MyDBFileHeader(file.getMetaData());
 		List<MyDBFileTuple> tpls = new ArrayList<MyDBFileTuple>();
 		
+		List<Integer> sizes = new ArrayList<Integer>();
+		for(SQLColumn c : file.getMetaData()){
+			sizes.add(c.getSize());
+		}
+		
+		this.tupleValueSizes = sizes;
+		
 		for(SQLTuple t : file.getPayLoad()){
-			tpls.add(new MyDBFileTuple(t));
+			tpls.add(new MyDBFileTuple(t, sizes));
 		}
 		
 		this.tuples = tpls;

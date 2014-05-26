@@ -1,4 +1,4 @@
-package ch.ethz.inf.dbproject.model;
+             package ch.ethz.inf.dbproject.model;
 
 import java.util.ArrayList;
 import java.util.List;
