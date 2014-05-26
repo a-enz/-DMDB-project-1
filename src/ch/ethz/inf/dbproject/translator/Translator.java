@@ -95,6 +95,9 @@ public class Translator {
 				int size = res.getColumnDisplaySize(i);
 				int typeCode = res.getColumnType(i);
 				
+				//translate typecode:
+				typeCode = TypeHelper.typeConvert(typeCode);
+				
 				metaData.add(new SQLColumn(name, size, typeCode));
 			}
 			return metaData;
