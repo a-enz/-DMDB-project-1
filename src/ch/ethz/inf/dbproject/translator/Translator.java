@@ -130,6 +130,6 @@ public class Translator {
 	}
 	
 	private void writeFile(MyDBFile file, PrintWriter out){
-		out.println(file.toString());
+		out.print(file.toString());
 	}
 }

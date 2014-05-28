@@ -202,7 +202,7 @@ public final class DatastoreInterface {
 			return null;			
 		}
 	}
-
+	
 	public final List<Case> getCasesByCategory(final String Category) {
 		try {
 			
@@ -250,6 +250,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+
 	public final List<CasePerson> GetCasePersonById(final int id){
 		try{
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -458,6 +459,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	
 	public final List<Case> getConvictions(int id){
 		List<Case> res = new ArrayList<Case>();
 		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd " +
@@ -562,6 +564,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	//TODO rename might be a problem
 	public final int countOpenCases(){
 		try{
 			final Statement stmt = sqlConnection.createStatement();
@@ -577,6 +580,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	//TODO rename might be a problem
 	public final int countClosedCases(){
 		try{
 			final Statement stmt = sqlConnection.createStatement();
@@ -590,6 +594,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	//TODO rename might be a problem
 	public final int countPerpetrators(){
 		try{
 			final Statement stmt = sqlConnection.createStatement();
@@ -619,6 +624,7 @@ public final class DatastoreInterface {
 		return res;
 	}
 
+	//TODO check if alias is a problem
 	public List<Case> searchByCategory(String category) {
 		List<Case> res = new ArrayList<Case>();
 		String query = "SELECT ca.CaseNr, ca.Title, ca.Date, ca.Location, ca.Status, ca.DateCon, DateEnd FROM Cases ca, ContainedIn co WHERE ca.CaseNr =  co.CaseID AND CatName = '" + category + "'";
@@ -640,6 +646,7 @@ public final class DatastoreInterface {
 	 * SEARCHES IN PERSON:
 	 ************************/
 	
+	//TODO check if alias is a problem
 	public List<Person> searchPersonByName(String first, String second) {
 		List<Person> res = new ArrayList<Person>();
 		String query = "SELECT p.PersonID, p.FirstName, p.SurName, p.Street, p.BirthDate, p.Nationality, p.Bounty " +
@@ -780,7 +787,7 @@ public final class DatastoreInterface {
 		return res;
 	}
 	
-
+	//TODO check if alias is a problem
 	public void updatePersonBounty(){
 		try {			
 			final Statement stmt = this.sqlConnection.createStatement();
@@ -804,7 +811,7 @@ public final class DatastoreInterface {
 		}
 	}
 
-
+	
 	public boolean insertCaseWithCat(String title, String date, String location, String dateCon, String dateEnd, String[] cats) {
 		String insert = "INSERT INTO Cases (Title, Date";
 		String values = " VALUES(";
@@ -838,7 +845,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
-	
+	//TODO Category.??? might be a problem
 	public List<Category> getCategoryByCase(String id) {
 		String query = "SELECT Category.CatName, Category.Parent FROM ContainedIn, Category WHERE ContainedIn.CatName = Category.CatName AND ContainedIn.CaseID = " + id;
 		List<Category> res = new ArrayList<Category>();
@@ -878,6 +885,7 @@ public final class DatastoreInterface {
 		}
 	}
 	
+	//TODO check if alias is a problem
 	//returns all categories not linked to a case
 	public List<Category> getExternalCatFromCase(String id) {
 		String query = "SELECT ca1.CatName, ca1.Parent FROM Category ca1 WHERE ca1.CatName NOT IN (";
